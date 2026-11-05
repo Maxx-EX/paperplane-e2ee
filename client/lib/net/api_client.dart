@@ -15,11 +15,11 @@ class ApiException implements Exception {
 }
 
 class ApiClient {
-  final String base;
+  String base;
   String? token;
   final http.Client _client = http.Client();
 
-  ApiClient({this.base = AppConfig.baseUrl, this.token});
+  ApiClient({this.base = 'http://127.0.0.1:8080', this.token});
 
   Map<String, String> get _headers => {
         'Content-Type': 'application/json',

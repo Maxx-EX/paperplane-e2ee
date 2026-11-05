@@ -4,52 +4,64 @@ import 'package:provider/provider.dart';
 import '../config/app_config.dart';
 import '../state/chat_store.dart';
 
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
 
   @override
+  State<SettingsPage> createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends State<SettingsPage> {
+  final _ctrl = TextEditingController();
+  String? _saved;
+
+  @override
+  void initState() {
+    super.initState();
+    _ctrl.text = AppConfig.baseUrl;
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final store = context.watch<ChatStore>();
     return Scaffold(
       appBar: AppBar(title: const Text('设置')),
       body: ListView(
+        padding: const EdgeInsets.all(20),
         children: [
+          const Text('服务器地址', style: TextStyle(fontWeight: 600)),
+          const SizedBox(height: 8),
+          TextField(
+            controller: _ctrl,
+            decoration: const InputDecoration(
+              hintText: 'http://192.168.1.5:8080',
+              helperText: 'Termux 里跑的服务端，或你的 VPS 地址。改完自动保存。',
+            ),
+            keyboardType: TextInputType.url,
+          ),
+          const SizedBox(height: 12),
+          if (_saved != null)
+            Text(_saved!, style: const TextStyle(color: Colors.green)),
+          const SizedBox(height: 8),
+          FilledButton(
+            onPressed: () async {
+              await AppConfig.setBaseUrl(_ctrl.text.trim());
+              if (context.mounted) {
+                final store = context.read<ChatStore>();
+                store.api.base = AppConfig.baseUrl;
+                setState(() => _saved = '已保存：${AppConfig.baseUrl}');
+              }
+            },
+            child: const Text('保存'),
+          ),
+          const Divider(height: 40),
+          const Text('关于', style: TextStyle(fontWeight: 600)),
           const ListTile(
-            title: Text('服务器地址'),
-            subtitle: Text(AppConfig.baseUrl),
-            leading: Icon(Icons.dns),
+            title: Text('Paperplane'),
+            subtitle: Text('v0.2.0 · 零知识 E2EE 聊天 · AGPL-3.0'),
           ),
-          ListTile(
-            title: Text('账号 ID'),
-            subtitle: Text(store.accountId ?? '未登录'),
-            leading: Icon(Icons.fingerprint),
-          ),
-          const Divider(),
-          ListTile(
-            title: const Text('关于'),
-            subtitle: const Text('Paperplane v0.2.0 · AGPL-3.0'),
-            leading: const Icon(Icons.info_outline),
-            onTap: () => showAboutDialog(
-              context: context,
-              applicationName: 'Paperplane',
-              applicationVersion: '0.2.0',
-              applicationLegalese: '零知识 E2EE 加密聊天',
-            ),
-          ),
-          const SizedBox(height: 24),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: FilledButton.icon(
-              onPressed: () async {
-                await context.read<ChatStore>().logout();
-                if (context.mounted) Navigator.pop(context);
-              },
-              icon: const Icon(Icons.logout),
-              label: const Text('退出登录'),
-              style: FilledButton.styleFrom(
-                minimumSize: const Size.fromHeight(48),
-              ),
-            ),
+          const ListTile(
+            title: Text('图标'),
+            subtitle: Text('黑白折纸鸽子'),
           ),
         ],
       ),

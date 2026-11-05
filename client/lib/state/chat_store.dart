@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:uuid/uuid.dart';
 
+import '../config/app_config.dart';
 import '../crypto/password.dart';
 import '../crypto/signal_service.dart';
 import '../net/api_client.dart';
@@ -43,6 +44,8 @@ class ChatStore extends ChangeNotifier {
   bool get loggedIn => accountId != null;
 
   Future<void> bootstrap() async {
+    await AppConfig.load();
+    api.base = AppConfig.baseUrl;
     accountId = await storage.read(key: 'account_id');
     api.token = await storage.read(key: 'token');
     if (accountId != null && api.token != null) {

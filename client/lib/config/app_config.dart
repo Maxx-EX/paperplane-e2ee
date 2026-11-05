@@ -1,12 +1,24 @@
-// 服务端配置：通过 --dart-define=SERVER_URL=... 注入，默认连本机 8080
+import 'settings_store.dart';
+
+/// 运行时服务端配置。
+/// 默认 127.0.0.1:8080；在 App 设置页改地址后会存到 secure storage，重启保留。
 class AppConfig {
-  static const String baseUrl = String.fromEnvironment(
-    'SERVER_URL',
-    defaultValue: 'http://127.0.0.1:8080',
-  );
+  static final SettingsStore settings = SettingsStore();
+
+  static String _baseUrl = 'http://127.0.0.1:8080';
+  static String get baseUrl => _baseUrl;
+
+  static Future<void> load() async {
+    _baseUrl = await settings.getServerUrl();
+  }
+
+  static Future<void> setBaseUrl(String url) async {
+    _baseUrl = url;
+    await settings.setServerUrl(url);
+  }
 
   static String get wsUrl {
-    final u = Uri.parse(baseUrl);
+    final u = Uri.parse(_baseUrl);
     final scheme = u.scheme == 'https' ? 'wss' : 'ws';
     return '$scheme://${u.host}:${u.hasPort ? u.port : 80}/ws';
   }
