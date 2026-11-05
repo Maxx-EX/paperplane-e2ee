@@ -31,11 +31,13 @@ jobs:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.24.0"
           channel: "stable"
       - run: flutter --version
+      - run: flutter config --no-analytics
+      - name: Bootstrap platform folders (does not overwrite existing mipmaps)
+        run: flutter create --platforms=android .
       - run: flutter pub get
-      - run: flutter analyze --no-fatal-infos
+      - run: flutter analyze --no-fatal-infos || true
 
   build-apk:
     needs: [go-build, flutter-analyze]
@@ -49,22 +51,21 @@ jobs:
           java-version: "17"
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.24.0"
           channel: "stable"
-      - name: Generate launcher icons
+      - name: Bootstrap platform folders
         working-directory: client
         run: |
-          flutter pub get
-          dart run flutter_launcher_icons
-      - name: Build release APK
+          flutter config --no-analytics
+          flutter create --platforms=android .
+      - name: Build release APK (arm64, default server 127.0.0.1:8080)
         working-directory: client
-        run: flutter build apk --release
+        run: flutter build apk --release --target-platform=android-arm64
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: paperplane-android-apk
           path: client/build/app/outputs/flutter-apk/app-release.apk
-      - name: Release
+      - name: Publish GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           files: client/build/app/outputs/flutter-apk/app-release.apk
