@@ -28,7 +28,7 @@ class _SettingsPageState extends State<SettingsPage> {
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
-          const Text('服务器地址', style: TextStyle(fontWeight: 600)),
+          const Text('服务器地址', style: TextStyle(fontWeight: FontWeight.w600)),
           const SizedBox(height: 8),
           TextField(
             controller: _ctrl,
@@ -54,7 +54,7 @@ class _SettingsPageState extends State<SettingsPage> {
             child: const Text('保存'),
           ),
           const Divider(height: 40),
-          const Text('关于', style: TextStyle(fontWeight: 600)),
+          const Text('关于', style: TextStyle(fontWeight: FontWeight.w600)),
           const ListTile(
             title: Text('Paperplane'),
             subtitle: Text('v0.2.0 · 零知识 E2EE 聊天 · AGPL-3.0'),
