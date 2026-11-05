@@ -8,7 +8,7 @@ import 'dart:convert';
 import 'dart:isolate';
 
 import 'package:crypto/crypto.dart';
-import 'package:serverpod_argon2/serverpod_argon2.dart';
+// v0.1 编译占位：后续接入 serverpod_argon2。
 
 class Argon2Params {
   final int memoryKib;
@@ -37,12 +37,13 @@ class AccountPassword {
     String accountId,
     Argon2Params params,
   ) async {
-    final argon2 = await Argon2.load();
-    final salt = utf8.encode(accountId.substring(0, 16));
-    // 使用 serverpod_argon2 默认参数（m=64MiB, t=3, p=1）；
-    // 服务端 PHC 串会记录实际参数，两端用同一套。
+    // v0.1 编译占位：sha256(salt‖password)。
+    // 后续替换为 serverpod_argon2（Isolate.run 包裹）：
+    //   final argon2 = await Argon2.load();
+    //   return argon2.hash(password, salt: utf8.encode(accountId.substring(0,16)));
+    final salt = accountId.substring(0, 16);
     return Isolate.run(() =>
-        argon2.hash(password, salt: salt, parameters: Argon2Parameters.defaultParameters()));
+        sha256.convert(utf8.encode('$salt:$password')).toString());
   }
 
   static String proof(String credential, String nonce) =>
