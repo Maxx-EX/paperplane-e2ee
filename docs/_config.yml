@@ -1,0 +1,7 @@
+remote_theme: pages-themes/cayman@v0.2.0
+plugins:
+  - jekyll-remote-theme
+title: Paperplane
+description: 零知识 E2EE 加密聊天系统 · AGPL-3.0
+show_downloads: false
+google_analytics:

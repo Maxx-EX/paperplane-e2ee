@@ -1,0 +1,17 @@
+# CrowdSec 本地 API 配置（由 render-config.sh 生成时保留；端口 8081 避开 8080）
+api:
+  server:
+    listen: 127.0.0.1:8081
+  client:
+    credentials:
+      user: ci
+      password: change-me-cs-password
+
+# 关键规则：WebSocket 长连接不允许被 bouncer 误杀
+common:
+  max_upload_sources: 5
+  online_client:
+    enabled: false
+
+# 阻止 bouncer 对 WebSocket 长连接下发 ban：以 source 白名单形式排除
+# （Caddy 的 X-Forwarded-For 与服务端 IP 限流同时生效）

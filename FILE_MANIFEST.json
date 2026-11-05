@@ -1,0 +1,523 @@
+{
+  "project": "paperplane",
+  "files": [
+    {
+      "path": ".gitignore",
+      "language": "text",
+      "bytes": 669,
+      "sha256": "b6320a6fd540dd00a847d011d45d6a67dd67bfd6138f6273faf95a52a3aeb4ba",
+      "lines": 40
+    },
+    {
+      "path": "LICENSE",
+      "language": "text",
+      "bytes": 34523,
+      "sha256": "0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0",
+      "lines": 661
+    },
+    {
+      "path": "Makefile",
+      "language": "makefile",
+      "bytes": 805,
+      "sha256": "a97aca6a9f4a05029ce9a370b1c35bf5001d057beaed4ab16d3c775c965da818",
+      "lines": 32
+    },
+    {
+      "path": "README.md",
+      "language": "markdown",
+      "bytes": 4383,
+      "sha256": "143749c0670d060e4a745becbe3abea9755176d0d54c516a8dda5f40f1b0a9e6",
+      "lines": 93
+    },
+    {
+      "path": "docker-compose.dev.yml",
+      "language": "yaml",
+      "bytes": 1014,
+      "sha256": "ae6029960e4e993cd60e4d6efd7ca2bb28d47c6539728e2b41d5b0ce2d5c28d5",
+      "lines": 37
+    },
+    {
+      "path": "client/analysis_options.yaml",
+      "language": "yaml",
+      "bytes": 98,
+      "sha256": "b8ba6920528f9687367c941f7bb0b6b023870dde07a751ea67675e8bd3bc4706",
+      "lines": 5
+    },
+    {
+      "path": "client/pubspec.yaml",
+      "language": "yaml",
+      "bytes": 893,
+      "sha256": "be310414906ef83f75abd95d2ab9e0e18eb624a831aaa46c8ef1d746ad68c072",
+      "lines": 39
+    },
+    {
+      "path": "client/android/app/src/main/res/mipmap-hdpi/ic_launcher.png",
+      "language": "text",
+      "bytes": 3656,
+      "sha256": "9ccb518dcf53ff0d7d7c351e4e83610c9053fa41f232de1968674e51636e8474",
+      "lines": 11
+    },
+    {
+      "path": "client/android/app/src/main/res/mipmap-mdpi/ic_launcher.png",
+      "language": "text",
+      "bytes": 1837,
+      "sha256": "6304e2bb01bcb814f35251b2401c8682bf2ee7f2859b21c33881463ff02af7cb",
+      "lines": 9
+    },
+    {
+      "path": "client/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png",
+      "language": "text",
+      "bytes": 5924,
+      "sha256": "0a1aa679658abca235a0d2c7d6cf589e1784fd0e6462f79a7e453a611d098b18",
+      "lines": 23
+    },
+    {
+      "path": "client/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png",
+      "language": "text",
+      "bytes": 12084,
+      "sha256": "bab5309a2addaa1ea1b907c90ca859e830fe45c092edb15b4b6be7f5e5bdc434",
+      "lines": 57
+    },
+    {
+      "path": "client/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
+      "language": "text",
+      "bytes": 20337,
+      "sha256": "f84c0bc0f1217e53c5ac92745ff0b16aa4db0117d45e83d829df7b00404afb0a",
+      "lines": 81
+    },
+    {
+      "path": "client/assets/app_icon.png",
+      "language": "text",
+      "bytes": 926208,
+      "sha256": "e2be9eac39cd665a690ad2597044f9f72d4e7014845697acf7625e023d2cb76f",
+      "lines": 3626
+    },
+    {
+      "path": "client/assets/icon-512.png",
+      "language": "text",
+      "bytes": 118572,
+      "sha256": "94fbaca37b896bdf33dad5b17ff1872bdebddb931e9fcea8806d36e3bcde60dc",
+      "lines": 439
+    },
+    {
+      "path": "client/lib/main.dart",
+      "language": "dart",
+      "bytes": 1047,
+      "sha256": "75c61459acd5c726ba155e85e24baf15122bcd30e124d3c7a1896777cd1342a8",
+      "lines": 43
+    },
+    {
+      "path": "client/lib/config/app_config.dart",
+      "language": "dart",
+      "bytes": 415,
+      "sha256": "d9d94862588f7281039ff93daadc3eff11cbb828c029ba6405f4829fda647b69",
+      "lines": 13
+    },
+    {
+      "path": "client/lib/crypto/password.dart",
+      "language": "dart",
+      "bytes": 1960,
+      "sha256": "d460a862a236f94b4fb114b93dea6a97beab6ee71dd108b9c1818452990ad0c6",
+      "lines": 54
+    },
+    {
+      "path": "client/lib/crypto/signal_service.dart",
+      "language": "dart",
+      "bytes": 3752,
+      "sha256": "e5507517855c23c185893e033f77a3eefdc22d94169327910e60c3d062263c83",
+      "lines": 99
+    },
+    {
+      "path": "client/lib/net/api_client.dart",
+      "language": "dart",
+      "bytes": 3942,
+      "sha256": "b9d6bd398eda44b77a2b2a91db9e20c50c1f96e048bf89bc114fb5fdc551f0ee",
+      "lines": 130
+    },
+    {
+      "path": "client/lib/net/realtime.dart",
+      "language": "dart",
+      "bytes": 904,
+      "sha256": "339eeb7c8e9d76e41269fec744ea8b6eb6a4de2c2afc150080d1f1a6ec772e62",
+      "lines": 35
+    },
+    {
+      "path": "client/lib/state/chat_store.dart",
+      "language": "dart",
+      "bytes": 5001,
+      "sha256": "4aa5920add593cc1092b8cc6de6c903ebf8581fd5a4359ba7c03d2247dfafa68",
+      "lines": 161
+    },
+    {
+      "path": "client/lib/ui/auth_page.dart",
+      "language": "dart",
+      "bytes": 2624,
+      "sha256": "699ea3b4e1bb1934c21dc5a8f826484f03b8fdd059d271400c1af69a7f6398bb",
+      "lines": 81
+    },
+    {
+      "path": "client/lib/ui/chat_page.dart",
+      "language": "dart",
+      "bytes": 2463,
+      "sha256": "1bd7f5b9fa18eb8be89a953c4436b53279cf31ebe51ee03fda6e9fbf5e35ab24",
+      "lines": 78
+    },
+    {
+      "path": "client/lib/ui/theme.dart",
+      "language": "dart",
+      "bytes": 1614,
+      "sha256": "8a278ba4039ddde1c5a9515ccfeeed44fadbc8c5fb8d5c1316139c2a154fd027",
+      "lines": 48
+    },
+    {
+      "path": "client/lib/ui/widgets/composer.dart",
+      "language": "dart",
+      "bytes": 1696,
+      "sha256": "c70316c308794513fe9502900c5426f22cfccc286f3601f80e04611aa7009ec6",
+      "lines": 60
+    },
+    {
+      "path": "client/lib/ui/widgets/message_bubble.dart",
+      "language": "dart",
+      "bytes": 1796,
+      "sha256": "840b99bffe0cde737b6ef3778ededed2c77a7f42cdbb06589f39be670bb55c03",
+      "lines": 56
+    },
+    {
+      "path": "client/web/index.html",
+      "language": "html",
+      "bytes": 479,
+      "sha256": "977707cd0312062f97b707214a6329caff86ea97c15e6079a99cd708d528ad2b",
+      "lines": 15
+    },
+    {
+      "path": "config/config.dev.yaml",
+      "language": "yaml",
+      "bytes": 1156,
+      "sha256": "32f67e9dfc4e866c8b9602bb0479326627e32df082e445790f228963bd06fbc0",
+      "lines": 61
+    },
+    {
+      "path": "config/config.yaml",
+      "language": "yaml",
+      "bytes": 2558,
+      "sha256": "5445a65573e35da7e5d3b26d7a568da4a3fef1c4fe904069725425fcd269759e",
+      "lines": 79
+    },
+    {
+      "path": "deploy/.env",
+      "language": "text",
+      "bytes": 744,
+      "sha256": "38ccbdb123409e72b100170a9eb22db5a96f4c50cc840483086f541247721100",
+      "lines": 26
+    },
+    {
+      "path": "deploy/Caddyfile",
+      "language": "text",
+      "bytes": 681,
+      "sha256": "beddbb5f2ead489e37b59dfe91cb77a3362b6da043488a1a6c590abf8162c9f3",
+      "lines": 32
+    },
+    {
+      "path": "deploy/caddy.env",
+      "language": "dotenv",
+      "bytes": 60,
+      "sha256": "63f606345a82d66f89dcd55aa2c1fe8b50433ab7e415ab4d91c032c7b6a14ad1",
+      "lines": 2
+    },
+    {
+      "path": "deploy/docker-compose.yml",
+      "language": "yaml",
+      "bytes": 2842,
+      "sha256": "044d1cad2b5e1a5c09eb381d0c3a27091495156bd96d98e58160443d1427c4eb",
+      "lines": 93
+    },
+    {
+      "path": "deploy/crowdsec/acquis.yaml",
+      "language": "yaml",
+      "bytes": 139,
+      "sha256": "abd029dcbff4019c45e5280c6a8d53bd9da156f2bec1d61ff38c7158bcfc3a04",
+      "lines": 5
+    },
+    {
+      "path": "deploy/crowdsec/config.yaml.local",
+      "language": "text",
+      "bytes": 508,
+      "sha256": "30a3a572364408aaabf914562bb613620c29244900b4133d4476677217ddce4b",
+      "lines": 17
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "language": "markdown",
+      "bytes": 1653,
+      "sha256": "01f80465b653ca53f6b01714aad31b76e6a4424c50229473e7dadeb093d2c5a5",
+      "lines": 50
+    },
+    {
+      "path": "docs/CRYPTO.md",
+      "language": "markdown",
+      "bytes": 2321,
+      "sha256": "75409df5417bc7f2cc1938341140af91b98aef5d21609624f0184cfcd9f5300c",
+      "lines": 65
+    },
+    {
+      "path": "docs/KNOWN_ERRORS.md",
+      "language": "markdown",
+      "bytes": 2714,
+      "sha256": "1eea2afdd1c70f3c60e27b04994030fa5c080e4235019a1080cb54024660f1be",
+      "lines": 26
+    },
+    {
+      "path": "docs/SELF_HOSTING.md",
+      "language": "markdown",
+      "bytes": 2081,
+      "sha256": "e7c9d40b3726f20a34eb4051223ebcf30aee54f070c58aa7027679a786aa7f2b",
+      "lines": 70
+    },
+    {
+      "path": "docs/_config.yml",
+      "language": "yaml",
+      "bytes": 191,
+      "sha256": "ab3bc90237490c270f946db41287c786dacb551307ecd78a5b78a9ecd7b03152",
+      "lines": 7
+    },
+    {
+      "path": "docs/index.html",
+      "language": "html",
+      "bytes": 11486,
+      "sha256": "651f45621c5938f72d78df7d5872e18f1f0cd8f54da5c8e5ee2aaccf633f0992",
+      "lines": 308
+    },
+    {
+      "path": "docs/assets/logo.png",
+      "language": "text",
+      "bytes": 926208,
+      "sha256": "e2be9eac39cd665a690ad2597044f9f72d4e7014845697acf7625e023d2cb76f",
+      "lines": 3626
+    },
+    {
+      "path": "policy-sidecar/Dockerfile",
+      "language": "dockerfile",
+      "bytes": 329,
+      "sha256": "58c972da7dfcb63e408ce085132142119eae8ec838e9eaf9bc5fcc57dc4758ee",
+      "lines": 11
+    },
+    {
+      "path": "policy-sidecar/build.gradle.kts",
+      "language": "kotlin",
+      "bytes": 671,
+      "sha256": "04aa62da0c11ceb4f45b5132f7bd38bc4041741f3253e8d8ac29de8d752c6573",
+      "lines": 28
+    },
+    {
+      "path": "policy-sidecar/settings.gradle.kts",
+      "language": "kotlin",
+      "bytes": 39,
+      "sha256": "3e8fa795e9e10a7e734b22cd461fe3660c8c2bee1eefb5df46e1e316cfa07593",
+      "lines": 1
+    },
+    {
+      "path": "policy-sidecar/config/application.yaml",
+      "language": "yaml",
+      "bytes": 655,
+      "sha256": "b87421fc19277087e8403301c249c20e60b69932e701ece80830b5381ca4bed3",
+      "lines": 22
+    },
+    {
+      "path": "policy-sidecar/src/main/kotlin/io/paperplane/policy/BanPublisher.kt",
+      "language": "kotlin",
+      "bytes": 3146,
+      "sha256": "cec78e802c338cd07ac621ecfbde1af712231f65e62166086278d588f36433cc",
+      "lines": 82
+    },
+    {
+      "path": "policy-sidecar/src/main/kotlin/io/paperplane/policy/Config.kt",
+      "language": "kotlin",
+      "bytes": 2849,
+      "sha256": "32a0e57ba4d9302f6d47c344b3156b7843d0580860910b2ad339218f1f6ab1c8",
+      "lines": 68
+    },
+    {
+      "path": "policy-sidecar/src/main/kotlin/io/paperplane/policy/Main.kt",
+      "language": "kotlin",
+      "bytes": 2485,
+      "sha256": "3cf82c8d37946a1acdeb850d9a6bf64c60c58d63e42cdd19abcc4f5d25c380da",
+      "lines": 73
+    },
+    {
+      "path": "policy-sidecar/src/main/kotlin/io/paperplane/policy/Rules.kt",
+      "language": "kotlin",
+      "bytes": 2528,
+      "sha256": "ec5240bb2c40b4d0db97fcdf057b527b477d9062e7924cc5acb2b7c742c75cef",
+      "lines": 67
+    },
+    {
+      "path": "scripts/gen-manifest.py",
+      "language": "python",
+      "bytes": 4955,
+      "sha256": "1c219749d92fdc7859a3b1f92a595773e107fc930678ba71c76bbf76d2764f69",
+      "lines": 137
+    },
+    {
+      "path": "scripts/render-config.sh",
+      "language": "bash",
+      "bytes": 8475,
+      "sha256": "f55f6336f604704d4cd845681c3ac777d2ff16eba6bc9db386eceb5c79572875",
+      "lines": 236
+    },
+    {
+      "path": "scripts/termux-bootstrap.sh",
+      "language": "bash",
+      "bytes": 947,
+      "sha256": "e4d2872f83d7b57c14189cfc174793bffe100a212337f3e4c3dc788377f4faf3",
+      "lines": 28
+    },
+    {
+      "path": "server/Dockerfile",
+      "language": "dockerfile",
+      "bytes": 542,
+      "sha256": "4f3b5640a739f716fbd86ae234ce127f8fac9710a275e9dd6f5385b1a4ab2230",
+      "lines": 17
+    },
+    {
+      "path": "server/go.mod",
+      "language": "text",
+      "bytes": 730,
+      "sha256": "8d82eed3904687ef0fd458a40357474aefb10d5cb70ddfd231e539ba289dfd51",
+      "lines": 23
+    },
+    {
+      "path": "server/go.sum",
+      "language": "text",
+      "bytes": 4344,
+      "sha256": "a54168d17be3b642b08d47825400f7e7c185e4198e23d6eb618777e08091e0b5",
+      "lines": 49
+    },
+    {
+      "path": "server/cmd/server/main.go",
+      "language": "go",
+      "bytes": 6403,
+      "sha256": "edd58f78f49f01d3edeefd5cba9bbde45bf23e80419b684429c8ff920d2cee04",
+      "lines": 229
+    },
+    {
+      "path": "server/internal/auth/token.go",
+      "language": "go",
+      "bytes": 6003,
+      "sha256": "68f7e99cc22293261a818eca170dc192dc6d7b463c86ed9530d4ba9fbcf241d0",
+      "lines": 206
+    },
+    {
+      "path": "server/internal/config/config.go",
+      "language": "go",
+      "bytes": 9606,
+      "sha256": "8f86bff551d8a7e58ef0a0084f03769ad5eadbdbcb9404777c17781e7981e53d",
+      "lines": 308
+    },
+    {
+      "path": "server/internal/defense/bans.go",
+      "language": "go",
+      "bytes": 1787,
+      "sha256": "b374bf7b61c3d65f8be2387e24943666075a91b1b8979bb509036c60f17acd53",
+      "lines": 79
+    },
+    {
+      "path": "server/internal/defense/limits.go",
+      "language": "go",
+      "bytes": 4737,
+      "sha256": "ba1efcbaaa2cdc7d0420c520d2f0163a7845e4322df8a66f18981886639d533c",
+      "lines": 159
+    },
+    {
+      "path": "server/internal/httpapi/handlers_auth.go",
+      "language": "go",
+      "bytes": 9598,
+      "sha256": "f4fb1a82d0ca017fef57f564ebf5dccfe987cb12d4238ad4d9282b0de6c5ce36",
+      "lines": 284
+    },
+    {
+      "path": "server/internal/httpapi/handlers_envelopes.go",
+      "language": "go",
+      "bytes": 10667,
+      "sha256": "f76523a0e636038af15660664e605474494cabf2a8a49984d317ecd3e62175aa",
+      "lines": 341
+    },
+    {
+      "path": "server/internal/httpapi/handlers_keys.go",
+      "language": "go",
+      "bytes": 6563,
+      "sha256": "5dd364006020822c4629d88a1746bf72d8b645b71a8acbfe49d2e0090a28caf5",
+      "lines": 222
+    },
+    {
+      "path": "server/internal/httpapi/middleware.go",
+      "language": "go",
+      "bytes": 3879,
+      "sha256": "0756ac3ed45d5d339aa498380a3afd848291932db99d5d486646f3945b88ac04",
+      "lines": 125
+    },
+    {
+      "path": "server/internal/httpapi/router.go",
+      "language": "go",
+      "bytes": 6199,
+      "sha256": "b191715bc567aed185e3802a95dc264ec8acb6ddc727ba373fb8b1a5da12952b",
+      "lines": 199
+    },
+    {
+      "path": "server/internal/store/postgres.go",
+      "language": "go",
+      "bytes": 9531,
+      "sha256": "3b26dde88659a90587b8907ae3098e98ec003ab89d3b4c2b12632443f27b2f8f",
+      "lines": 295
+    },
+    {
+      "path": "server/internal/store/redis.go",
+      "language": "go",
+      "bytes": 806,
+      "sha256": "1a4baf58131afd77e8c6a097f9f5513f5ab03aaa02d5c42c46cbc7bbf7238147",
+      "lines": 31
+    },
+    {
+      "path": "server/internal/ws/hub.go",
+      "language": "go",
+      "bytes": 4448,
+      "sha256": "9597b3a218fe6f52f5203464dc4e853323dde15f9139bad543ecad87c7065a5e",
+      "lines": 199
+    },
+    {
+      "path": "server/migrations/0001_init.sql",
+      "language": "sql",
+      "bytes": 1474,
+      "sha256": "1259e67e413657185e5721db9d2ac00a6c9ee0a40b59b7aa9369007ae83a669e",
+      "lines": 43
+    },
+    {
+      "path": "xdp/Makefile",
+      "language": "makefile",
+      "bytes": 719,
+      "sha256": "e654c5ce0345a82b7f423c49dd1066b2be22b61b5f40365afa726415e225a24c",
+      "lines": 26
+    },
+    {
+      "path": "xdp/config.env",
+      "language": "dotenv",
+      "bytes": 89,
+      "sha256": "531cd7fc8333bf9e59727156c45b5d0de0fd440a1704571bc17ee20d1a198700",
+      "lines": 4
+    },
+    {
+      "path": "xdp/src/xdp_filter.c",
+      "language": "c",
+      "bytes": 2016,
+      "sha256": "875efcea6423cbbe4e9e6b23727738298ef44be28685eb1f327153a478ed295e",
+      "lines": 68
+    },
+    {
+      "path": "xdp/src/xdp_loader.cpp",
+      "language": "cpp",
+      "bytes": 4768,
+      "sha256": "4de0b1324a874139a943a78ac2afd832f9a72d7a869a6cfb4b8f3da1db57eb0e",
+      "lines": 147
+    }
+  ]
+}

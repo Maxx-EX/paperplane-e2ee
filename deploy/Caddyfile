@@ -1,0 +1,32 @@
+{$PUBLIC_URL} {
+	encode gzip
+
+	header {
+		Strict-Transport-Security "max-age=63072000; includeSubDomains"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+		Referrer-Policy "no-referrer"
+		Permissions-Policy "interest-cohort=()"
+		-Server
+	}
+
+	log {
+		output file /var/log/caddy/access.log {
+			roll_size 10MiB
+			roll_keep 3
+			roll_keep_for_days 7
+		}
+		format json
+	}
+
+	# WebSocket 原生支持：Upgrade 自动透传，Go 服务端只校验 Origin 白名单
+	reverse_proxy {$UPSTREAM} {
+		header_up X-Forwarded-For {remote_host}
+		header_up X-Forwarded-Proto {scheme}
+		flush_interval -1
+		transport http {
+			dial_timeout 3s
+			response_header_timeout 30s
+		}
+	}
+}

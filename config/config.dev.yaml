@@ -1,0 +1,61 @@
+# 开发用配置：仅本地 docker-compose.dev.yml 用，占位密钥允许。
+project: paperplane
+environment: development
+
+server:
+  host: 127.0.0.1
+  port: 8080
+  public_url: http://127.0.0.1:8080
+  ws_allowed_origins:
+    - http://127.0.0.1:8080
+    - http://localhost:8080
+    - chrome-extension://*
+
+database:
+  host: 127.0.0.1
+  port: 5432
+  name: paperplane
+  user: paperplane
+  password: dev-password
+  max_conns: 8
+  envelope_ttl_hours: 24
+
+redis:
+  host: 127.0.0.1
+  port: 6379
+  password: ""
+  db: 0
+
+jwt:
+  secret: dev-only-secret-at-least-32-bytes-long-xxxx
+  ttl: 24h
+
+crypto:
+  pepper: dev-only-pepper
+  argon2:
+    memory_kib: 65536
+    iterations: 3
+    parallelism: 1
+
+client:
+  dev_server_url: http://127.0.0.1:8080
+  app_name: Paperplane
+
+defense:
+  xdp:
+    enabled: false
+    iface: wlan0
+  rate_limits:
+    ws_per_ip: 32
+    prekey_per_min: 120
+    envelope_per_min: 240
+    envelope_distinct_targets: 64
+    envelope_window: 60s
+    challenge_per_min: 30
+  kotlin:
+    redis_stream: paperplane:events
+    consumer_group: paperplane-policy
+    window: 60s
+  crowdsec:
+    collections: [crowdsecurity/http-cve]
+    lapi_port: 8081

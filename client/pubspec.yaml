@@ -1,0 +1,39 @@
+name: paperplane
+description: Zero-knowledge E2EE chat client (paperplane-style, AGPL-3.0)
+publish_to: "none"
+version: 0.1.0+1
+
+environment:
+  sdk: ">=3.5.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_chat_ui: 1.6.13
+  flutter_chat_types: ^3.6.2
+  libsignal_protocol_dart: ^0.8.2
+  flutter_secure_storage: ^9.2.2
+  serverpod_argon2: ^0.1.0
+  http: ^1.2.2
+  web_socket_channel: ^3.0.1
+  crypto: ^3.0.5
+  uuid: ^4.5.1
+  provider: ^6.1.2
+
+dev_dependencies:
+  flutter_lints: ^5.0.0
+  flutter_launcher_icons: ^0.14.1
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/app_icon.png
+
+# flutter_launcher_icons 配置：运行 `dart run flutter_launcher_icons` 生成 mipmap
+flutter_launcher_icons:
+  android: true
+  ios: false
+  image_path: "assets/app_icon.png"
+  min_sdk_android: 24
+  adaptive_icon_background: "#ffffff"
+  adaptive_icon_foreground: "assets/app_icon.png"

@@ -1,0 +1,40 @@
+# ---- secrets & generated ----
+deploy/.env
+deploy/caddy.env
+deploy/crowdsec/acquis.yaml
+policy-sidecar/config/application.yaml
+xdp/config.env
+*.zip
+
+# ---- Go ----
+server/paperplane-server
+server/**/*.test
+server/coverage.out
+
+# ---- Flutter / Dart ----
+client/.dart_tool/
+client/.packages
+client/pubspec.lock
+client/build/
+client/.flutter-plugins
+client/.flutter-plugins-dependencies
+client/android/.gradle/
+client/ios/Pods/
+client/web/.dart_tool/
+
+# ---- Kotlin / Gradle ----
+policy-sidecar/.gradle/
+policy-sidecar/build/
+policy-sidecar/.kotlin/
+
+# ---- XDP build ----
+xdp/build/
+xdp/*.o
+xdp/vmlinux.h
+
+# ---- editors / OS ----
+.idea/
+.vscode/
+.DS_Store
+*.swp
+*.log

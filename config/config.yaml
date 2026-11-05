@@ -1,0 +1,79 @@
+# =============================================================================
+# Paperplane — 唯一配置源 (single source of truth)
+# -----------------------------------------------------------------------------
+# 这个文件是整个系统唯一的服务器配置真相源。
+# 修改后执行 `make config`（即 scripts/render-config.sh），会派生：
+#   deploy/.env                 -> docker compose 变量
+#   deploy/caddy.env            -> Caddyfile 变量
+#   deploy/crowdsec/acquis.yaml -> CrowdSec 日志采集
+#   policy-sidecar/config/application.yaml -> Kotlin sidecar
+#   xdp/config.env              -> XDP loader 参数
+# Go 服务启动时直接读取本文件并 fail-fast 校验必填项。
+# 任何服务都不允许再单独维护一份配置副本。
+# =============================================================================
+
+project: paperplane
+environment: development   # production | development。生产部署前必须改成 production 并替换所有 change-me 占位
+
+server:
+  host: 127.0.0.1         # 只绑回环：公网流量必须经 Caddy 进入
+  port: 8080
+  public_url: https://chat.example.com
+  ws_allowed_origins:
+    - https://chat.example.com
+  read_header_timeout: 10s
+  idle_timeout: 120s
+  shutdown_timeout: 15s
+
+database:
+  host: 127.0.0.1
+  port: 5432
+  name: paperplane
+  user: paperplane
+  password: change-me-postgres
+  max_conns: 16
+  envelope_ttl_hours: 24   # 离线密文最长保留时间，投递/确认后立即删除
+
+redis:
+  host: 127.0.0.1
+  port: 6379
+  password: change-me-redis
+  db: 0
+  pool_size: 16
+
+jwt:
+  secret: change-me-please-32-bytes-minimum-secret
+  ttl: 24h
+  issuer: paperplane
+
+crypto:
+  pepper: change-me-project-pepper-at-least-16-bytes
+  argon2:
+    memory_kib: 65536      # 64 MiB
+    iterations: 3
+    parallelism: 1
+
+client:
+  dev_server_url: http://127.0.0.1:8080
+  app_name: Paperplane
+
+defense:
+  xdp:
+    enabled: true
+    iface: eth0
+  rate_limits:
+    ws_per_ip: 6           # 单 IP 并发 WebSocket 连接上限
+    prekey_per_min: 30     # 预密钥包请求 / 分钟 / 账号
+    envelope_per_min: 60   # 密文信封 / 分钟 / 账号
+    envelope_distinct_targets: 20  # 窗口内不同收件人上限
+    envelope_window: 60s
+    challenge_per_min: 10  # 登录/注册挑战 / 分钟 / IP
+  kotlin:
+    redis_stream: paperplane:events
+    consumer_group: paperplane-policy
+    window: 60s
+  crowdsec:
+    collections:
+      - crowdsecurity/http-cve
+      - crowdsecurity/base-http-scenarios
+    lapi_port: 8081          # 避开服务端 8080
