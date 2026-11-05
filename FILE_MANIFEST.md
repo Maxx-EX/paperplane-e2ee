@@ -1,8 +1,8 @@
 # FILE MANIFEST — Paperplane
 本文件由 `scripts/gen-manifest.py` 生成，收录仓库内每个文件的路径与完整代码。
 
-- 文件总数：**74**
-- 总体积：**2183.6 KiB**
+- 文件总数：**76**
+- 总体积：**2193.5 KiB**
 - 生成时间：2026-11-05
 ## 目录树
 
@@ -13,6 +13,8 @@ paperplane-e2ee/
   Makefile
   README.md
   docker-compose.dev.yml
+  paperplane-e2ee.zip
+  .github/
   client/
     analysis_options.yaml
     pubspec.yaml
@@ -29,6 +31,7 @@ paperplane-e2ee/
     CRYPTO.md
     KNOWN_ERRORS.md
     SELF_HOSTING.md
+    TERMUX.md
     _config.yml
     index.html
   policy-sidecar/
@@ -46,6 +49,8 @@ paperplane-e2ee/
   xdp/
     Makefile
     config.env
+    workflows/
+      ci.yml
     android/
     assets/
       app_icon.png
@@ -137,77 +142,79 @@ paperplane-e2ee/
 | 1 | `.gitignore` | text | 40 | 669 B |
 | 2 | `LICENSE` | text | 661 | 34523 B |
 | 3 | `Makefile` | makefile | 32 | 805 B |
-| 4 | `README.md` | markdown | 93 | 4383 B |
+| 4 | `README.md` | markdown | 109 | 5034 B |
 | 5 | `docker-compose.dev.yml` | yaml | 37 | 1014 B |
-| 6 | `client/analysis_options.yaml` | yaml | 5 | 98 B |
-| 7 | `client/pubspec.yaml` | yaml | 39 | 893 B |
-| 8 | `client/android/app/src/main/res/mipmap-hdpi/ic_launcher.png` | text | 11 | 3656 B |
-| 9 | `client/android/app/src/main/res/mipmap-mdpi/ic_launcher.png` | text | 9 | 1837 B |
-| 10 | `client/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png` | text | 23 | 5924 B |
-| 11 | `client/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png` | text | 57 | 12084 B |
-| 12 | `client/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png` | text | 81 | 20337 B |
-| 13 | `client/assets/app_icon.png` | text | 3626 | 926208 B |
-| 14 | `client/assets/icon-512.png` | text | 439 | 118572 B |
-| 15 | `client/lib/main.dart` | dart | 43 | 1047 B |
-| 16 | `client/lib/config/app_config.dart` | dart | 13 | 415 B |
-| 17 | `client/lib/crypto/password.dart` | dart | 54 | 1960 B |
-| 18 | `client/lib/crypto/signal_service.dart` | dart | 99 | 3752 B |
-| 19 | `client/lib/net/api_client.dart` | dart | 130 | 3942 B |
-| 20 | `client/lib/net/realtime.dart` | dart | 35 | 904 B |
-| 21 | `client/lib/state/chat_store.dart` | dart | 161 | 5001 B |
-| 22 | `client/lib/ui/auth_page.dart` | dart | 81 | 2624 B |
-| 23 | `client/lib/ui/chat_page.dart` | dart | 78 | 2463 B |
-| 24 | `client/lib/ui/theme.dart` | dart | 48 | 1614 B |
-| 25 | `client/lib/ui/widgets/composer.dart` | dart | 60 | 1696 B |
-| 26 | `client/lib/ui/widgets/message_bubble.dart` | dart | 56 | 1796 B |
-| 27 | `client/web/index.html` | html | 15 | 479 B |
-| 28 | `config/config.dev.yaml` | yaml | 61 | 1156 B |
-| 29 | `config/config.yaml` | yaml | 79 | 2558 B |
-| 30 | `deploy/.env` | text | 26 | 744 B |
-| 31 | `deploy/Caddyfile` | text | 32 | 681 B |
-| 32 | `deploy/caddy.env` | dotenv | 2 | 60 B |
-| 33 | `deploy/docker-compose.yml` | yaml | 93 | 2842 B |
-| 34 | `deploy/crowdsec/acquis.yaml` | yaml | 5 | 139 B |
-| 35 | `deploy/crowdsec/config.yaml.local` | text | 17 | 508 B |
-| 36 | `docs/ARCHITECTURE.md` | markdown | 50 | 1653 B |
-| 37 | `docs/CRYPTO.md` | markdown | 65 | 2321 B |
-| 38 | `docs/KNOWN_ERRORS.md` | markdown | 26 | 2714 B |
-| 39 | `docs/SELF_HOSTING.md` | markdown | 70 | 2081 B |
-| 40 | `docs/_config.yml` | yaml | 7 | 191 B |
-| 41 | `docs/index.html` | html | 308 | 11486 B |
-| 42 | `docs/assets/logo.png` | text | 3626 | 926208 B |
-| 43 | `policy-sidecar/Dockerfile` | dockerfile | 11 | 329 B |
-| 44 | `policy-sidecar/build.gradle.kts` | kotlin | 28 | 671 B |
-| 45 | `policy-sidecar/settings.gradle.kts` | kotlin | 1 | 39 B |
-| 46 | `policy-sidecar/config/application.yaml` | yaml | 22 | 655 B |
-| 47 | `policy-sidecar/src/main/kotlin/io/paperplane/policy/BanPublisher.kt` | kotlin | 82 | 3146 B |
-| 48 | `policy-sidecar/src/main/kotlin/io/paperplane/policy/Config.kt` | kotlin | 68 | 2849 B |
-| 49 | `policy-sidecar/src/main/kotlin/io/paperplane/policy/Main.kt` | kotlin | 73 | 2485 B |
-| 50 | `policy-sidecar/src/main/kotlin/io/paperplane/policy/Rules.kt` | kotlin | 67 | 2528 B |
-| 51 | `scripts/gen-manifest.py` | python | 137 | 4955 B |
-| 52 | `scripts/render-config.sh` | bash | 236 | 8475 B |
-| 53 | `scripts/termux-bootstrap.sh` | bash | 28 | 947 B |
-| 54 | `server/Dockerfile` | dockerfile | 17 | 542 B |
-| 55 | `server/go.mod` | text | 23 | 730 B |
-| 56 | `server/go.sum` | text | 49 | 4344 B |
-| 57 | `server/cmd/server/main.go` | go | 229 | 6403 B |
-| 58 | `server/internal/auth/token.go` | go | 206 | 6003 B |
-| 59 | `server/internal/config/config.go` | go | 308 | 9606 B |
-| 60 | `server/internal/defense/bans.go` | go | 79 | 1787 B |
-| 61 | `server/internal/defense/limits.go` | go | 159 | 4737 B |
-| 62 | `server/internal/httpapi/handlers_auth.go` | go | 284 | 9598 B |
-| 63 | `server/internal/httpapi/handlers_envelopes.go` | go | 341 | 10667 B |
-| 64 | `server/internal/httpapi/handlers_keys.go` | go | 222 | 6563 B |
-| 65 | `server/internal/httpapi/middleware.go` | go | 125 | 3879 B |
-| 66 | `server/internal/httpapi/router.go` | go | 199 | 6199 B |
-| 67 | `server/internal/store/postgres.go` | go | 295 | 9531 B |
-| 68 | `server/internal/store/redis.go` | go | 31 | 806 B |
-| 69 | `server/internal/ws/hub.go` | go | 199 | 4448 B |
-| 70 | `server/migrations/0001_init.sql` | sql | 43 | 1474 B |
-| 71 | `xdp/Makefile` | makefile | 26 | 719 B |
-| 72 | `xdp/config.env` | dotenv | 4 | 89 B |
-| 73 | `xdp/src/xdp_filter.c` | c | 68 | 2016 B |
-| 74 | `xdp/src/xdp_loader.cpp` | cpp | 147 | 4768 B |
+| 6 | `.github/workflows/ci.yml` | yaml | 71 | 1992 B |
+| 7 | `client/analysis_options.yaml` | yaml | 5 | 98 B |
+| 8 | `client/pubspec.yaml` | yaml | 39 | 893 B |
+| 9 | `client/android/app/src/main/res/mipmap-hdpi/ic_launcher.png` | text | 11 | 3656 B |
+| 10 | `client/android/app/src/main/res/mipmap-mdpi/ic_launcher.png` | text | 9 | 1837 B |
+| 11 | `client/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png` | text | 23 | 5924 B |
+| 12 | `client/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png` | text | 57 | 12084 B |
+| 13 | `client/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png` | text | 81 | 20337 B |
+| 14 | `client/assets/app_icon.png` | text | 3626 | 926208 B |
+| 15 | `client/assets/icon-512.png` | text | 439 | 118572 B |
+| 16 | `client/lib/main.dart` | dart | 43 | 1047 B |
+| 17 | `client/lib/config/app_config.dart` | dart | 13 | 415 B |
+| 18 | `client/lib/crypto/password.dart` | dart | 54 | 1960 B |
+| 19 | `client/lib/crypto/signal_service.dart` | dart | 99 | 3752 B |
+| 20 | `client/lib/net/api_client.dart` | dart | 130 | 3942 B |
+| 21 | `client/lib/net/realtime.dart` | dart | 35 | 904 B |
+| 22 | `client/lib/state/chat_store.dart` | dart | 161 | 5001 B |
+| 23 | `client/lib/ui/auth_page.dart` | dart | 81 | 2624 B |
+| 24 | `client/lib/ui/chat_page.dart` | dart | 78 | 2463 B |
+| 25 | `client/lib/ui/theme.dart` | dart | 48 | 1614 B |
+| 26 | `client/lib/ui/widgets/composer.dart` | dart | 60 | 1696 B |
+| 27 | `client/lib/ui/widgets/message_bubble.dart` | dart | 56 | 1796 B |
+| 28 | `client/web/index.html` | html | 15 | 479 B |
+| 29 | `config/config.dev.yaml` | yaml | 61 | 1156 B |
+| 30 | `config/config.yaml` | yaml | 79 | 2558 B |
+| 31 | `deploy/.env` | text | 26 | 744 B |
+| 32 | `deploy/Caddyfile` | text | 32 | 681 B |
+| 33 | `deploy/caddy.env` | dotenv | 2 | 60 B |
+| 34 | `deploy/docker-compose.yml` | yaml | 93 | 2842 B |
+| 35 | `deploy/crowdsec/acquis.yaml` | yaml | 5 | 139 B |
+| 36 | `deploy/crowdsec/config.yaml.local` | text | 17 | 508 B |
+| 37 | `docs/ARCHITECTURE.md` | markdown | 50 | 1653 B |
+| 38 | `docs/CRYPTO.md` | markdown | 65 | 2321 B |
+| 39 | `docs/KNOWN_ERRORS.md` | markdown | 26 | 2714 B |
+| 40 | `docs/SELF_HOSTING.md` | markdown | 70 | 2081 B |
+| 41 | `docs/TERMUX.md` | markdown | 102 | 3182 B |
+| 42 | `docs/_config.yml` | yaml | 7 | 191 B |
+| 43 | `docs/index.html` | html | 344 | 15825 B |
+| 44 | `docs/assets/logo.png` | text | 3626 | 926208 B |
+| 45 | `policy-sidecar/Dockerfile` | dockerfile | 11 | 329 B |
+| 46 | `policy-sidecar/build.gradle.kts` | kotlin | 28 | 671 B |
+| 47 | `policy-sidecar/settings.gradle.kts` | kotlin | 1 | 39 B |
+| 48 | `policy-sidecar/config/application.yaml` | yaml | 22 | 655 B |
+| 49 | `policy-sidecar/src/main/kotlin/io/paperplane/policy/BanPublisher.kt` | kotlin | 82 | 3146 B |
+| 50 | `policy-sidecar/src/main/kotlin/io/paperplane/policy/Config.kt` | kotlin | 68 | 2849 B |
+| 51 | `policy-sidecar/src/main/kotlin/io/paperplane/policy/Main.kt` | kotlin | 73 | 2485 B |
+| 52 | `policy-sidecar/src/main/kotlin/io/paperplane/policy/Rules.kt` | kotlin | 67 | 2528 B |
+| 53 | `scripts/gen-manifest.py` | python | 137 | 4955 B |
+| 54 | `scripts/render-config.sh` | bash | 236 | 8475 B |
+| 55 | `scripts/termux-bootstrap.sh` | bash | 28 | 947 B |
+| 56 | `server/Dockerfile` | dockerfile | 17 | 542 B |
+| 57 | `server/go.mod` | text | 23 | 730 B |
+| 58 | `server/go.sum` | text | 49 | 4344 B |
+| 59 | `server/cmd/server/main.go` | go | 229 | 6403 B |
+| 60 | `server/internal/auth/token.go` | go | 206 | 6003 B |
+| 61 | `server/internal/config/config.go` | go | 308 | 9606 B |
+| 62 | `server/internal/defense/bans.go` | go | 79 | 1787 B |
+| 63 | `server/internal/defense/limits.go` | go | 159 | 4737 B |
+| 64 | `server/internal/httpapi/handlers_auth.go` | go | 284 | 9598 B |
+| 65 | `server/internal/httpapi/handlers_envelopes.go` | go | 341 | 10667 B |
+| 66 | `server/internal/httpapi/handlers_keys.go` | go | 222 | 6563 B |
+| 67 | `server/internal/httpapi/middleware.go` | go | 125 | 3879 B |
+| 68 | `server/internal/httpapi/router.go` | go | 199 | 6199 B |
+| 69 | `server/internal/store/postgres.go` | go | 295 | 9531 B |
+| 70 | `server/internal/store/redis.go` | go | 31 | 806 B |
+| 71 | `server/internal/ws/hub.go` | go | 199 | 4448 B |
+| 72 | `server/migrations/0001_init.sql` | sql | 43 | 1474 B |
+| 73 | `xdp/Makefile` | makefile | 26 | 719 B |
+| 74 | `xdp/config.env` | dotenv | 4 | 89 B |
+| 75 | `xdp/src/xdp_filter.c` | c | 68 | 2016 B |
+| 76 | `xdp/src/xdp_loader.cpp` | cpp | 147 | 4768 B |
 
 ## 文件内容
 
@@ -964,6 +971,9 @@ clean:
 ```markdown
 # Paperplane
 
+[![CI](https://github.com/Maxx-EX/paperplane-e2ee/actions/workflows/ci.yml/badge.svg)](https://github.com/Maxx-EX/paperplane-e2ee/actions/workflows/ci.yml)
+[![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL--3.0-blue.svg)](LICENSE)
+
 **纸飞机风格的零知识 E2EE 加密聊天系统** — 服务端不解密、不记录密文、不存储可逆账号字段，私钥仅客户端安全存储。
 
 - 客户端：Flutter 3.x（`flutter_chat_ui`）+ `libsignal_protocol_dart`（X3DH + Double Ratchet）
@@ -1024,6 +1034,19 @@ cd deploy && docker compose up -d
 ```
 
 详见 [`docs/SELF_HOSTING.md`](docs/SELF_HOSTING.md)。
+
+## 在 Termux 上跑（Android 手机 / 平板）
+
+```bash
+pkg install -y git golang postgresql redis
+git clone https://github.com/Maxx-EX/paperplane-e2ee.git
+cd paperplane-e2ee
+bash scripts/termux-bootstrap.sh
+```
+
+完整教程（含在 proot Ubuntu 里编译 release APK）见 [`docs/TERMUX.md`](docs/TERMUX.md)。
+
+打 tag `v*.*.*` 后，CI 会自动构建 release APK 并发布到 GitHub Releases。
 
 ## 目录结构
 
@@ -1097,6 +1120,82 @@ services:
     environment:
       CONFIG_PATH: /etc/paperplane/config.yaml
       MIGRATIONS_DIR: /migrations
+```
+
+### `.github/workflows/ci.yml`
+
+```yaml
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+
+jobs:
+  go-build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.25"
+          cache-dependency-path: server/go.sum
+      - name: Render config check
+        run: ./scripts/render-config.sh --check
+      - name: Build server
+        run: cd server && CGO_ENABLED=0 go build -trimpath -ldflags "-s -w" -o paperplane-server ./cmd/server
+      - name: Vet
+        run: cd server && go vet ./...
+
+  flutter-analyze:
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: client
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.24.0"
+          channel: "stable"
+      - run: flutter --version
+      - run: flutter pub get
+      - run: flutter analyze --no-fatal-infos
+
+  build-apk:
+    needs: [go-build, flutter-analyze]
+    runs-on: ubuntu-24.04
+    if: startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.24.0"
+          channel: "stable"
+      - name: Generate launcher icons
+        working-directory: client
+        run: |
+          flutter pub get
+          dart run flutter_launcher_icons
+      - name: Build release APK
+        working-directory: client
+        run: flutter build apk --release
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: paperplane-android-apk
+          path: client/build/app/outputs/flutter-apk/app-release.apk
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: client/build/app/outputs/flutter-apk/app-release.apk
+          generate_release_notes: true
 ```
 
 ### `client/analysis_options.yaml`
@@ -2705,6 +2804,113 @@ sudo ./xdp_loader eth0 /var/lib/paperplane/bans.txt
 - **客户端连不上**：浏览器跨域需把 `https://chat.example.com` 加进 `ws_allowed_origins`，Caddy 必须 HTTPS。
 ```
 
+### `docs/TERMUX.md`
+
+```markdown
+# 在 Termux 上跑起来（Android 手机 / 平板）
+
+Paperplane 服务端用 Go 写，不依赖内核模块，所以可以直接在 Termux 里跑。
+客户端（APK）在本机用 `flutter build apk` 编译，或直接从 GitHub Releases 下载。
+
+## 一、装 Termux
+
+1. 从 F-Droid 装 Termux（不要用 Google Play 上那个过期版）。
+2. 打开 Termux，先更新：
+
+```bash
+pkg update -y && pkg upgrade -y
+```
+
+## 二、在 Termux 里跑服务端
+
+一条命令：
+
+```bash
+pkg install -y git golang postgresql redis clang make
+git clone https://github.com/Maxx-EX/paperplane-e2ee.git
+cd paperplane-e2ee
+bash scripts/termux-bootstrap.sh
+```
+
+脚本会自动：
+- 初始化 PostgreSQL 数据库目录
+- 启动 `postgres` 与 `redis-server`
+- 建 `paperplane` 用户与数据库
+- 跑 `go run ./server/cmd/server -config config/config.yaml`
+
+服务监听 `127.0.0.1:8080`。手机上用 `localhost:8080` 即可。
+
+> 注意：Termux 里 PostgreSQL 不支持扩展，本项目未使用任何 PG 扩展，开箱即跑。
+
+## 三、在 Termux 里编译 APK（可选，需要 proot）
+
+Termux 不能直接跑 Flutter SDK（缺 Android SDK 与 glibc），用 proot Ubuntu：
+
+```bash
+pkg install -y proot-distro
+proot-distro install ubuntu
+proot-distro login ubuntu
+```
+
+进入 Ubuntu 后：
+
+```bash
+apt update && apt install -y git curl unzip openjdk-17-jdk wget
+
+# 装 Flutter SDK
+git clone --depth 1 -b stable https://github.com/flutter/flutter.git /opt/flutter
+export PATH="/opt/flutter/bin:$PATH"
+flutter --version
+
+# 装 Android 命令行工具
+mkdir -p /opt/android-sdk/cmdline-tools
+wget https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip
+unzip commandlinetools-linux-11076708_latest.zip -d /opt/android-sdk/cmdline-tools
+mv /opt/android-sdk/cmdline-tools/cmdline-tools /opt/android-sdk/cmdline-tools/latest
+export ANDROID_SDK_ROOT=/opt/android-sdk
+export PATH="$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools:$PATH"
+yes | sdkmanager --licenses
+sdkmanager "platforms;android-34" "build-tools;34.0.0"
+
+# 编译
+cd paperplane-e2ee/client
+flutter pub get
+flutter build apk --release
+# 产物：build/app/outputs/flutter-apk/app-release.apk
+```
+
+把 APK 拷到手机：
+
+```bash
+cp build/app/outputs/flutter-apk/app-release.apk /sdcard/Download/
+```
+
+然后在 Android 上点开安装即可。
+
+## 四、对外暴露（可选）
+
+Termux 里跑 Caddy 或用 `frp` / `cloudflared` 反代到公网。最简方式：
+
+```bash
+pkg install -y cloudflared
+cloudflared tunnel --url http://127.0.0.1:8080
+```
+
+它会给你一个 `https://xxx.trycloudflare.com` 临时域名。
+把这个域名写进 `config/config.yaml` 的 `server.public_url` 与 `ws_allowed_origins`，
+重新 `make config` 即可。
+
+## 五、常见问题
+
+| 问题 | 解决 |
+|---|---|
+| `go: command not found` | `pkg install golang` |
+| Postgres 起不来 | `pg_ctl -D $PREFIX/var/lib/postgresql start` 看日志 |
+| Flutter 卡在 pub get | `flutter pub cache repair` |
+| APK 装不上 | 允许「未知来源」安装；架构选 `--target-platform=android-arm64` |
+| 手机杀后台 | 给 Termux 加电池白名单，用 `termux-wake-lock` |
+```
+
 ### `docs/_config.yml`
 
 ```yaml
@@ -2725,123 +2931,120 @@ google_analytics:
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Paperplane — 零知识 E2EE 加密聊天</title>
+<title>Paperplane — Zero-Knowledge E2EE Communication Platform</title>
 <link rel="icon" type="image/png" href="assets/logo.png" />
 <style>
   :root {
-    --bg: #0b0f16;
-    --panel: #121826;
+    --bg: #0a0e14;
+    --bg-2: #0f141d;
+    --panel: #121926;
     --line: rgba(255,255,255,0.08);
-    --text: #e7ecf3;
-    --muted: #9aa7b8;
-    --accent: #6fa8dc;
-    --accent2: #8fd3b8;
-    --warn: #f0b868;
+    --text: #e8edf4;
+    --muted: #8a97a8;
+    --accent: #4f8fd6;
+    --accent-2: #5ec9a7;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
   body {
-    background: radial-gradient(1200px 600px at 80% -10%, #1b2740 0%, transparent 60%),
-                radial-gradient(900px 500px at -10% 20%, #16222e 0%, transparent 60%),
-                var(--bg);
+    background:
+      radial-gradient(1100px 500px at 90% -10%, rgba(79,143,214,0.12), transparent 60%),
+      radial-gradient(900px 500px at -10% 10%, rgba(94,201,167,0.08), transparent 60%),
+      var(--bg);
     color: var(--text);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
                  "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-    line-height: 1.6;
+    line-height: 1.65;
     -webkit-font-smoothing: antialiased;
   }
-  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
 
-  /* Nav */
   nav {
-    position: sticky; top: 0; z-index: 10;
-    backdrop-filter: blur(12px);
-    background: rgba(11,15,22,0.7);
+    position: sticky; top: 0; z-index: 20;
+    background: rgba(10,14,20,0.82);
+    backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--line);
   }
-  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
   .brand { display: flex; align-items: center; gap: 10px; font-weight: 600; }
   .brand img { width: 28px; height: 28px; border-radius: 6px; }
-  nav a { color: var(--muted); text-decoration: none; margin-left: 18px; font-size: 14px; }
-  nav a:hover { color: var(--text); }
+  .brand .v { font-size: 12px; color: var(--muted); font-weight: 400; margin-left: 4px; }
+  nav .links a { color: var(--muted); text-decoration: none; margin-left: 20px; font-size: 14px; }
+  nav .links a:hover { color: var(--text); }
+  .btn {
+    display: inline-block; padding: 10px 18px; border-radius: 8px;
+    font-size: 14px; text-decoration: none; border: 1px solid var(--line);
+    transition: all .15s ease;
+  }
+  .btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .btn-primary:hover { background: #3d7cc0; }
+  .btn-ghost { color: var(--text); background: rgba(255,255,255,0.03); }
+  .btn-ghost:hover { background: rgba(255,255,255,0.07); }
 
-  /* Hero */
   header { padding: 90px 0 70px; }
-  .hero { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 40px; align-items: center; }
-  h1 { font-size: 44px; line-height: 1.15; margin: 0 0 16px; letter-spacing: -0.5px; }
+  .eyebrow {
+    display: inline-block; font-size: 12px; color: var(--accent-2);
+    background: rgba(94,201,167,0.1); padding: 4px 10px; border-radius: 999px;
+    letter-spacing: 0.5px; margin-bottom: 18px;
+  }
+  h1 { font-size: 48px; line-height: 1.1; margin: 0 0 18px; letter-spacing: -1px; }
   h1 .grad {
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
     -webkit-background-clip: text; background-clip: text; color: transparent;
   }
-  .sub { color: var(--muted); font-size: 17px; margin: 0 0 28px; max-width: 560px; }
+  .sub { color: var(--muted); font-size: 17px; max-width: 680px; margin: 0 0 30px; }
   .cta { display: flex; gap: 12px; flex-wrap: wrap; }
-  .btn {
-    display: inline-block; padding: 12px 22px; border-radius: 10px;
-    font-size: 15px; text-decoration: none; border: 1px solid transparent;
-    transition: transform .15s ease, background .15s ease;
-  }
-  .btn-primary { background: linear-gradient(135deg, var(--accent), #4a7bb5); color: #fff; }
-  .btn-ghost { border-color: var(--line); color: var(--text); background: rgba(255,255,255,0.03); }
-  .btn:hover { transform: translateY(-1px); }
-
-  /* Dove illustration */
-  .dove-card {
-    background: linear-gradient(160deg, rgba(111,168,220,0.12), rgba(143,211,184,0.08));
-    border: 1px solid var(--line); border-radius: 20px;
-    padding: 30px; display: flex; align-items: center; justify-content: center;
-  }
-  .dove-card svg { width: 100%; max-width: 320px; height: auto; }
-
-  /* Section */
-  section { padding: 60px 0; border-top: 1px solid var(--line); }
-  h2 { font-size: 28px; margin: 0 0 8px; }
-  .lead { color: var(--muted); margin: 0 0 28px; }
-
-  /* Cards */
-  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-  .card {
-    background: var(--panel); border: 1px solid var(--line); border-radius: 14px;
-    padding: 20px;
-  }
-  .card h3 { margin: 0 0 8px; font-size: 16px; }
-  .card p { margin: 0; color: var(--muted); font-size: 14px; }
-  .card .tag {
-    display: inline-block; font-size: 12px; color: var(--accent2);
-    background: rgba(143,211,184,0.1); padding: 2px 8px; border-radius: 999px; margin-bottom: 10px;
-  }
-
-  /* Model diagram */
-  .model {
-    background: var(--panel); border: 1px solid var(--line); border-radius: 16px;
-    padding: 24px; overflow-x: auto;
-  }
-  .row { display: flex; gap: 12px; align-items: stretch; flex-wrap: wrap; }
-  .node {
-    flex: 1; min-width: 140px; text-align: center;
-    padding: 14px 10px; border-radius: 10px; border: 1px solid var(--line);
+  .badges { margin-top: 28px; display: flex; gap: 10px; flex-wrap: wrap; }
+  .badge {
+    font-family: var(--mono); font-size: 12px; color: var(--muted);
+    border: 1px solid var(--line); padding: 4px 10px; border-radius: 6px;
     background: rgba(255,255,255,0.02);
   }
-  .node b { display: block; font-size: 14px; margin-bottom: 4px; }
-  .node span { color: var(--muted); font-size: 12px; }
-  .arrow { align-self: center; color: var(--muted); font-size: 20px; }
+  .badge b { color: var(--accent-2); font-weight: 600; }
 
-  /* Code block */
-  pre {
-    background: #0a0e15; border: 1px solid var(--line); border-radius: 12px;
-    padding: 16px; overflow-x: auto; font-size: 13px; line-height: 1.55;
-    color: #c8d3e0;
+  section { padding: 70px 0; border-top: 1px solid var(--line); }
+  h2 { font-size: 30px; margin: 0 0 8px; letter-spacing: -0.3px; }
+  .lead { color: var(--muted); margin: 0 0 36px; max-width: 720px; }
+
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .card {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+    padding: 22px;
   }
-  code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .card h3 { margin: 0 0 8px; font-size: 15px; }
+  .card p { margin: 0; color: var(--muted); font-size: 14px; }
+  .card .tag {
+    display: inline-block; font-size: 11px; color: var(--accent-2);
+    background: rgba(94,201,167,0.1); padding: 2px 8px; border-radius: 4px;
+    margin-bottom: 12px; font-family: var(--mono);
+  }
 
-  /* Footer */
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 500; font-size: 13px; }
+  td b { color: var(--accent-2); font-weight: 500; }
+
+  .arch {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 16px;
+    padding: 28px; overflow-x: auto;
+  }
+  .arch svg { width: 100%; min-width: 720px; height: auto; display: block; }
+
+  pre {
+    background: #070a10; border: 1px solid var(--line); border-radius: 10px;
+    padding: 18px; overflow-x: auto; font-family: var(--mono);
+    font-size: 13px; line-height: 1.6; color: #c9d4e2;
+  }
+  pre .c { color: #5a6a80; }
+
   footer { padding: 40px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
   footer a { color: var(--accent); text-decoration: none; }
 
   @media (max-width: 820px) {
-    .hero { grid-template-columns: 1fr; }
-    h1 { font-size: 32px; }
+    h1 { font-size: 34px; }
     .grid { grid-template-columns: 1fr; }
-    nav a { display: none; }
+    nav .links a:not(:last-child) { display: none; }
   }
 </style>
 </head>
@@ -2850,159 +3053,186 @@ google_analytics:
 <nav>
   <div class="wrap">
     <div class="brand">
-      <img src="assets/logo.png" alt="logo" />
+      <img src="assets/logo.png" alt="Paperplane" />
       <span>Paperplane</span>
+      <span class="v">v0.1 · AGPL-3.0</span>
     </div>
-    <div>
-      <a href="#features">特性</a>
-      <a href="#model">安全模型</a>
-      <a href="#config">配置</a>
+    <div class="links">
+      <a href="#stack">协议栈</a>
+      <a href="#arch">架构</a>
+      <a href="#promise">零知识承诺</a>
+      <a href="#deploy">部署</a>
       <a href="CRYPTO.md">密码学</a>
       <a href="SELF_HOSTING.md">自托管</a>
-      <a href="KNOWN_ERRORS.md">错误清单</a>
-      <a class="btn btn-primary" style="margin-left:18px;" href="https://github.com/paperplane-e2ee/paperplane-e2ee">GitHub</a>
+      <a href="TERMUX.md">Termux</a>
+      <a class="btn btn-primary" style="margin-left:20px;" href="https://github.com/Maxx-EX/paperplane-e2ee">GitHub</a>
     </div>
   </div>
 </nav>
 
 <header>
-  <div class="wrap hero">
-    <div>
-      <h1>纸飞机风格的<br /><span class="grad">零知识 E2EE 加密聊天</span></h1>
-      <p class="sub">
-        服务端不解密、不记录密文、不存储可逆账号字段；私钥仅客户端安全存储。
-        Flutter + Go + libsignal + Kotlin sidecar + eBPF/XDP，单一配置源，AGPL-3.0。
-      </p>
-      <div class="cta">
-        <a class="btn btn-primary" href="https://github.com/paperplane-e2ee/paperplane-e2ee">在 GitHub 上查看</a>
-        <a class="btn btn-ghost" href="SELF_HOSTING.md">五分钟自托管</a>
-      </div>
+  <div class="wrap">
+    <span class="eyebrow">ZERO-KNOWLEDGE · END-TO-END ENCRYPTED · SELF-HOSTABLE</span>
+    <h1>纸飞机风格的<br /><span class="grad">零知识 E2EE 通信平台</span></h1>
+    <p class="sub">
+      服务端不解密、不记录密文、不存储可逆账号字段。私钥仅在客户端安全存储。
+      从应用层到内核网络栈，每一层都假设数据库已被对手拿走。
+    </p>
+    <div class="cta">
+      <a class="btn btn-primary" href="https://github.com/Maxx-EX/paperplane-e2ee">查看源码</a>
+      <a class="btn btn-ghost" href="SELF_HOSTING.md">五分钟自托管</a>
+      <a class="btn btn-ghost" href="TERMUX.md">在 Termux 上运行</a>
     </div>
-    <div class="dove-card" aria-hidden="true">
-      <!-- 黑白鸽子图标（单色 SVG 示意，实际用 assets/logo.png） -->
-      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <path fill="#ffffff" d="M40 110c10-30 45-45 75-40 25 4 45 20 55 35-15 5-30 5-45 0-5 15-20 25-40 25-15 0-35-8-45-20z"/>
-        <path fill="#0b0f16" d="M60 118c15-20 45-30 75-22-10 12-30 22-55 22-8 0-15 0-20 0z"/>
-        <circle cx="150" cy="100" r="3" fill="#ffffff"/>
-      </svg>
+    <div class="badges">
+      <span class="badge">Go <b>1.25</b></span>
+      <span class="badge">Flutter <b>3.24</b></span>
+      <span class="badge">libsignal <b>0.8.2</b></span>
+      <span class="badge">eBPF/XDP <b>libbpf</b></span>
+      <span class="badge">Postgres <b>16</b></span>
+      <span class="badge">Redis <b>7</b></span>
+      <span class="badge">Caddy <b>2</b></span>
     </div>
   </div>
 </header>
 
-<section id="features">
+<section id="stack">
   <div class="wrap">
-    <h2>为隐私而生的分层防御</h2>
-    <p class="lead">从应用协议到内核网络栈，每一层都假设对手已经拿到数据库。</p>
+    <h2>协议栈</h2>
+    <p class="lead">不自研密码学。所有 E2EE 都由 libsignal 完成；账号派生链经过单向哈希与 Argon2id 加固。</p>
     <div class="grid">
       <div class="card">
-        <span class="tag">E2EE</span>
-        <h3>libsignal X3DH + Double Ratchet</h3>
-        <p>不自研密码学。IdentityKey / SignedPreKey / OneTimePreKey 在客户端生成，私钥入 flutter_secure_storage。</p>
+        <span class="tag">X3DH</span>
+        <h3>IdentityKey + SignedPreKey + OneTimePreKey</h3>
+        <p>首次会话通过预密钥包完成 ECDH 多边握手；公钥上传，私钥入 flutter_secure_storage。</p>
       </div>
       <div class="card">
-        <span class="tag">Zero-Knowledge</span>
-        <h3>只存账号 ID 与 PHC</h3>
-        <p>account_id = SHA-256(username ‖ pepper)，登录用 HMAC(nonce) 挑战；服务端永不接触明文密码。</p>
+        <span class="tag">DOUBLE RATCHET</span>
+        <h3>前向保密 / 未来保密</h3>
+        <p>每条消息轮换发送密钥与接收密钥；单条消息泄漏不影响历史与未来消息。</p>
       </div>
       <div class="card">
-        <span class="tag">Sealed Sender</span>
-        <h3>盲令牌发信</h3>
-        <p>信封投递后清除路由元数据，ack 即删除；离线密文 24h TTL 兜底，服务端不知道谁发给谁。</p>
+        <span class="tag">ARGON2ID</span>
+        <h3>m=64 MiB · t=3 · p=1</h3>
+        <p>客户端用 serverpod_argon2（Zig 原生）在 Isolate.run 里跑；服务端只比对 PHC 串。</p>
       </div>
       <div class="card">
-        <span class="tag">Runtime Defense</span>
-        <h3>多层限流</h3>
-        <p>WS Origin 精确白名单、每 IP 连接数、预密钥与信封令牌桶、distinct-target 滑动窗口。</p>
+        <span class="tag">SEALED SENDER</span>
+        <h3>盲令牌信封</h3>
+        <p>信封投递后清除路由元数据，ack 即删除；离线密文 24h TTL 兜底。</p>
       </div>
       <div class="card">
-        <span class="tag">Policy Sidecar</span>
-        <h3>Kotlin + Redis Streams</h3>
-        <p>结构化并发消费事件，Redis TIME 时钟，跨维规则（IP→账号比值、重连频率）下发封禁。</p>
+        <span class="tag">JWT</span>
+        <h3>HS256 · 只含 account_id</h3>
+        <p>登录用 HMAC-SHA256(credential, nonce) 挑战响应；WebSocket 用 30s 一次性 ticket，token 不入 URL。</p>
       </div>
       <div class="card">
-        <span class="tag">Kernel</span>
-        <h3>eBPF/XDP LPM 黑名单</h3>
-        <p>封禁 IP 在内核态直接丢包，SIGTERM 显式 detach，RAII 封装 libbpf，CI 启用 ASan/UBSan。</p>
+        <span class="tag">TRANSPORT</span>
+        <h3>Caddy 终止 TLS · Origin 精确白名单</h3>
+        <p>服务端只绑 127.0.0.1:8080；WS CheckOrigin 拒绝所有不在白名单内的 Origin，绝不 return true。</p>
       </div>
     </div>
   </div>
 </section>
 
-<section id="model">
+<section id="arch">
   <div class="wrap">
-    <h2>安全模型一览</h2>
-    <p class="lead">客户端永远是可信边界；服务端只做信封转发与准入控制。</p>
-    <div class="model">
-      <div class="row">
-        <div class="node">
-          <b>Flutter 客户端</b>
-          <span>libsignal<br />secure storage</span>
-        </div>
-        <div class="arrow">⇄ E2EE ⇄</div>
-        <div class="node">
-          <b>Go Relay</b>
-          <span>只看信封<br />不看明文</span>
-        </div>
-        <div class="arrow">⇄</div>
-        <div class="node">
-          <b>Postgres</b>
-          <span>account_id + PHC<br />待投信封</span>
-        </div>
-      </div>
-      <div style="height:16px"></div>
-      <div class="row">
-        <div class="node">
-          <b>Redis</b>
-          <span>nonce / ticket<br />限流计数</span>
-        </div>
-        <div class="arrow">⇄</div>
-        <div class="node">
-          <b>Kotlin sidecar</b>
-          <span>事件流 → 规则</span>
-        </div>
-        <div class="arrow">⇄</div>
-        <div class="node">
-          <b>CrowdSec</b>
-          <span>LAPI 决策</span>
-        </div>
-        <div class="arrow">⇄</div>
-        <div class="node">
-          <b>XDP/eBPF</b>
-          <span>LPM 丢包</span>
-        </div>
-      </div>
+    <h2>架构</h2>
+    <p class="lead">六层防御，从应用协议到内核网络栈。</p>
+    <div class="arch">
+      <svg viewBox="0 0 1000 420" xmlns="http://www.w3.org/2000/svg" font-family="ui-monospace, Menlo, monospace" font-size="12">
+        <defs>
+          <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M0,0 L10,5 L0,10 z" fill="#8a97a8"/>
+          </marker>
+        </defs>
+        <rect x="20" y="160" width="170" height="100" rx="10" fill="#121926" stroke="#4f8fd6" stroke-width="1.5"/>
+        <text x="105" y="195" text-anchor="middle" fill="#e8edf4" font-weight="600">Flutter Client</text>
+        <text x="105" y="215" text-anchor="middle" fill="#8a97a8">libsignal · secure storage</text>
+        <text x="105" y="235" text-anchor="middle" fill="#8a97a8">Argon2id (Isolate)</text>
+
+        <rect x="260" y="160" width="140" height="100" rx="10" fill="#121926" stroke="#5ec9a7" stroke-width="1.5"/>
+        <text x="330" y="195" text-anchor="middle" fill="#e8edf4" font-weight="600">Caddy</text>
+        <text x="330" y="215" text-anchor="middle" fill="#8a97a8">TLS termination</text>
+        <text x="330" y="235" text-anchor="middle" fill="#8a97a8">WS upgrade</text>
+
+        <rect x="460" y="140" width="170" height="140" rx="10" fill="#121926" stroke="#4f8fd6" stroke-width="1.5"/>
+        <text x="545" y="175" text-anchor="middle" fill="#e8edf4" font-weight="600">Go Relay</text>
+        <text x="545" y="195" text-anchor="middle" fill="#8a97a8">HTTP + WebSocket</text>
+        <text x="545" y="215" text-anchor="middle" fill="#8a97a8">zero-knowledge</text>
+        <text x="545" y="235" text-anchor="middle" fill="#8a97a8">rate limits (Redis)</text>
+        <text x="545" y="255" text-anchor="middle" fill="#8a97a8">Origin whitelist</text>
+
+        <rect x="690" y="80" width="140" height="80" rx="10" fill="#121926" stroke="#8a97a8" stroke-width="1.5"/>
+        <text x="760" y="115" text-anchor="middle" fill="#e8edf4" font-weight="600">PostgreSQL</text>
+        <text x="760" y="135" text-anchor="middle" fill="#8a97a8">account_id + PHC</text>
+
+        <rect x="690" y="180" width="140" height="80" rx="10" fill="#121926" stroke="#8a97a8" stroke-width="1.5"/>
+        <text x="760" y="215" text-anchor="middle" fill="#e8edf4" font-weight="600">Redis</text>
+        <text x="760" y="235" text-anchor="middle" fill="#8a97a8">nonce · ticket · events</text>
+
+        <rect x="460" y="320" width="170" height="80" rx="10" fill="#121926" stroke="#5ec9a7" stroke-width="1.5"/>
+        <text x="545" y="350" text-anchor="middle" fill="#e8edf4" font-weight="600">Kotlin Sidecar</text>
+        <text x="545" y="370" text-anchor="middle" fill="#8a97a8">Redis Streams · rules</text>
+
+        <rect x="690" y="300" width="140" height="50" rx="10" fill="#121926" stroke="#8a97a8" stroke-width="1.5"/>
+        <text x="760" y="330" text-anchor="middle" fill="#e8edf4" font-weight="600">CrowdSec LAPI</text>
+
+        <rect x="690" y="360" width="140" height="50" rx="10" fill="#121926" stroke="#f0b868" stroke-width="1.5"/>
+        <text x="760" y="390" text-anchor="middle" fill="#e8edf4" font-weight="600">XDP / eBPF</text>
+
+        <line x1="190" y1="210" x2="260" y2="210" stroke="#4f8fd6" stroke-width="1.5" marker-end="url(#arr)"/>
+        <line x1="400" y1="210" x2="460" y2="210" stroke="#4f8fd6" stroke-width="1.5" marker-end="url(#arr)"/>
+        <line x1="630" y1="180" x2="690" y2="120" stroke="#8a97a8" stroke-width="1.5" marker-end="url(#arr)"/>
+        <line x1="630" y1="220" x2="690" y2="220" stroke="#8a97a8" stroke-width="1.5" marker-end="url(#arr)"/>
+        <line x1="545" y1="280" x2="545" y2="320" stroke="#5ec9a7" stroke-width="1.5" marker-end="url(#arr)"/>
+        <line x1="630" y1="360" x2="690" y2="325" stroke="#8a97a8" stroke-width="1.5" marker-end="url(#arr)"/>
+        <line x1="630" y1="370" x2="690" y2="385" stroke="#f0b868" stroke-width="1.5" marker-end="url(#arr)"/>
+      </svg>
     </div>
   </div>
 </section>
 
-<section id="config">
+<section id="promise">
   <div class="wrap">
-    <h2>单一配置源</h2>
-    <p class="lead">所有服务器配置收敛到一个文件，渲染派生出容器、反向代理、策略与内核过滤。</p>
-    <pre><code># config/config.yaml（节选）
-server:
-  host: 127.0.0.1
-  port: 8080
-  public_url: https://chat.example.com
-  ws_allowed_origins: ["https://chat.example.com"]
-jwt:
-  secret: ${openssl rand -hex 32}
-  ttl: 24h
-crypto:
-  pepper: ${openssl rand -hex 16}
-  argon2: { memory_kib: 65536, iterations: 3, parallelism: 1 }
-defense:
-  rate_limits: { ws_per_ip: 32, prekey_per_min: 120, envelope_per_min: 240 }
-  xdp: { enabled: true, iface: eth0 }
-  crowdsec: { lapi_port: 8081 }
-# make config  →  deploy/.env, caddy.env, acquis.yaml, application.yaml</code></pre>
+    <h2>零知识承诺</h2>
+    <p class="lead">服务端允许做的事，与服务端被禁止做的事，全部写进协议。</p>
+    <table>
+      <thead><tr><th>允许</th><th>禁止</th></tr></thead>
+      <tbody>
+        <tr><td><b>转发密文信封</b>，按收件人投递</td><td>解密、记录、索引密文内容</td></tr>
+        <tr><td>存储 account_id 与 Argon2id PHC</td><td>存储可逆用户名或明文密码</td></tr>
+        <tr><td>在线推送 envelope 帧，ack 后删除</td><td>用内存 Map 当生产 store</td></tr>
+        <tr><td>按 IP 做连接数与速率限制</td><td>记录 JWT、Origin、口令明文</td></tr>
+        <tr><td>发布结构化事件流给 sidecar</td><td>在防御层解密密文或还原会话</td></tr>
+      </tbody>
+    </table>
   </div>
 </section>
 
-<section id="links">
+<section id="deploy">
   <div class="wrap">
-    <h2>文档与路线</h2>
-    <p class="lead">完整密码学承诺、自托管步骤与防御清单。</p>
+    <h2>快速部署</h2>
+    <p class="lead">单一配置源：所有服务器配置收敛到 <code>config/config.yaml</code>，渲染派生出容器、反向代理、策略与内核过滤。</p>
+<pre><span class="c"># 1. 拉代码</span>
+git clone https://github.com/Maxx-EX/paperplane-e2ee.git
+cd paperplane-e2ee
+
+<span class="c"># 2. 改唯一配置（密钥、域名、网卡）</span>
+${EDITOR:-vi} config/config.yaml
+
+<span class="c"># 3. 渲染派生配置 + 起服务</span>
+./scripts/render-config.sh
+cd deploy && docker compose up -d
+
+<span class="c"># 4. 健康检查</span>
+curl https://chat.example.com/healthz</pre>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>文档</h2>
+    <p class="lead">完整密码学模型、自托管步骤、已知错误清单与 Termux 教程。</p>
     <div class="grid">
       <div class="card">
         <h3><a href="CRYPTO.md" style="color:var(--text)">密码学模型 →</a></h3>
@@ -3013,8 +3243,20 @@ defense:
         <p>改 config、render、docker compose up、验证健康检查。</p>
       </div>
       <div class="card">
+        <h3><a href="TERMUX.md" style="color:var(--text)">Termux 教程 →</a></h3>
+        <p>在 Android 手机上跑服务端，用 proot Ubuntu 编译 APK。</p>
+      </div>
+      <div class="card">
         <h3><a href="KNOWN_ERRORS.md" style="color:var(--text)">已知错误清单 →</a></h3>
         <p>A–J 协议层 + K-1–K-9 内核/策略层踩坑与防御。</p>
+      </div>
+      <div class="card">
+        <h3><a href="ARCHITECTURE.md" style="color:var(--text)">架构说明 →</a></h3>
+        <p>组件职责、请求流、数据流、配置流。</p>
+      </div>
+      <div class="card">
+        <h3><a href="https://github.com/Maxx-EX/paperplane-e2ee/releases" style="color:var(--text)">Releases →</a></h3>
+        <p>打 tag 后 CI 自动构建 release APK。</p>
       </div>
     </div>
   </div>
@@ -3022,7 +3264,7 @@ defense:
 
 <footer>
   <div class="wrap">
-    <p>Paperplane · AGPL-3.0 · 图标：黑白折纸鸽子 · 部署在 GitHub Pages。</p>
+    <p>Paperplane · AGPL-3.0 · 本项目不收集遥测、不追踪用户。图标：黑白折纸鸽子。</p>
   </div>
 </footer>
 

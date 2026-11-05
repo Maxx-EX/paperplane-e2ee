@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+
+jobs:
+  go-build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.25"
+          cache-dependency-path: server/go.sum
+      - name: Render config check
+        run: ./scripts/render-config.sh --check
+      - name: Build server
+        run: cd server && CGO_ENABLED=0 go build -trimpath -ldflags "-s -w" -o paperplane-server ./cmd/server
+      - name: Vet
+        run: cd server && go vet ./...
+
+  flutter-analyze:
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: client
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.24.0"
+          channel: "stable"
+      - run: flutter --version
+      - run: flutter pub get
+      - run: flutter analyze --no-fatal-infos
+
+  build-apk:
+    needs: [go-build, flutter-analyze]
+    runs-on: ubuntu-24.04
+    if: startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.24.0"
+          channel: "stable"
+      - name: Generate launcher icons
+        working-directory: client
+        run: |
+          flutter pub get
+          dart run flutter_launcher_icons
+      - name: Build release APK
+        working-directory: client
+        run: flutter build apk --release
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: paperplane-android-apk
+          path: client/build/app/outputs/flutter-apk/app-release.apk
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: client/build/app/outputs/flutter-apk/app-release.apk
+          generate_release_notes: true

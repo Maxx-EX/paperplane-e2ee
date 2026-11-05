@@ -1,5 +1,8 @@
 # Paperplane
 
+[![CI](https://github.com/Maxx-EX/paperplane-e2ee/actions/workflows/ci.yml/badge.svg)](https://github.com/Maxx-EX/paperplane-e2ee/actions/workflows/ci.yml)
+[![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL--3.0-blue.svg)](LICENSE)
+
 **纸飞机风格的零知识 E2EE 加密聊天系统** — 服务端不解密、不记录密文、不存储可逆账号字段，私钥仅客户端安全存储。
 
 - 客户端：Flutter 3.x（`flutter_chat_ui`）+ `libsignal_protocol_dart`（X3DH + Double Ratchet）
@@ -60,6 +63,19 @@ cd deploy && docker compose up -d
 ```
 
 详见 [`docs/SELF_HOSTING.md`](docs/SELF_HOSTING.md)。
+
+## 在 Termux 上跑（Android 手机 / 平板）
+
+```bash
+pkg install -y git golang postgresql redis
+git clone https://github.com/Maxx-EX/paperplane-e2ee.git
+cd paperplane-e2ee
+bash scripts/termux-bootstrap.sh
+```
+
+完整教程（含在 proot Ubuntu 里编译 release APK）见 [`docs/TERMUX.md`](docs/TERMUX.md)。
+
+打 tag `v*.*.*` 后，CI 会自动构建 release APK 并发布到 GitHub Releases。
 
 ## 目录结构
 
