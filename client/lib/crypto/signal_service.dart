@@ -1,7 +1,5 @@
 // Signal 协议层：X3DH + Double Ratchet 完全委托给 libsignal_protocol_dart。
 // 本项目不自研任何 E2EE 算法。
-// 注意：libsignal_protocol_dart 0.8.2 的部分构造器命名随版本微调，
-// 如编译失败，仅需按官方 API 微调本文件中的字节反序列化调用。
 import 'dart:convert';
 import 'dart:typed_data';
 
@@ -9,14 +7,17 @@ import 'package:libsignal_protocol_dart/libsignal_protocol_dart.dart';
 
 class SignalService {
   InMemorySignalProtocolStore? _store;
+  IdentityKeyPair? _identityKeyPair;
+  int _registrationId = 0;
+
   static const int deviceId = 1;
 
   Future<void> ensureIdentity() async {
     if (_store != null) return;
-    final identityKeyPair = generateIdentityKeyPair();
-    final registrationId = generateRegistrationId(false);
-    _store = InMemorySignalProtocolStore(identityKeyPair, registrationId);
-    final spk = generateSignedPreKey(identityKeyPair, 0);
+    _identityKeyPair = generateIdentityKeyPair();
+    _registrationId = generateRegistrationId(false);
+    _store = InMemorySignalProtocolStore(_identityKeyPair!, _registrationId);
+    final spk = generateSignedPreKey(_identityKeyPair!, 1);
     await _store!.storeSignedPreKey(spk.id, spk);
     final preKeys = generatePreKeys(0, 100);
     for (final p in preKeys) {
@@ -33,11 +34,11 @@ class SignalService {
     for (var id = 0; id < 100; id++) {
       try {
         final k = await s.loadPreKey(id);
-        ots.add({'id': id, 'public': base64Encode(k.serialize())});
+        ots.add({'id': id, 'public': base64Encode(k.keyPair.publicKey.serialize())});
       } catch (_) {}
     }
     return {
-      'identity_key': base64Encode(s.identityKeyPair().publicKey.serialize()),
+      'identity_key': base64Encode(_identityKeyPair!.getPublicKey().serialize()),
       'signed_prekey': {
         'id': spk.id,
         'public': base64Encode(spk.keyPair.publicKey.serialize()),
@@ -59,16 +60,14 @@ class SignalService {
     final signed = bundle['signed_prekey'] as Map<String, dynamic>;
     final ot = bundle['one_time_prekey'] as Map<String, dynamic>?;
     final preKeyBundle = PreKeyBundle(
-      1,
+      _registrationId,
       deviceId,
       ot != null ? (ot['id'] as num).toInt() : 0,
-      ot != null
-          ? Curve25519PublicKey.fromBase64(ot['public'] as String)
-          : Curve25519PublicKey.fromBase64(''),
+      ot != null ? Curve25519PublicKey.fromBytes(base64Decode(ot['public'] as String)) : null,
       (signed['id'] as num).toInt(),
-      Curve25519PublicKey.fromBase64(signed['public'] as String),
+      Curve25519PublicKey.fromBytes(base64Decode(signed['public'] as String)),
       base64Decode(signed['signature'] as String),
-      IdentityKey.fromSerialized(base64Decode(bundle['identity_key'] as String)),
+      IdentityKey(base64Decode(bundle['identity_key'] as String)),
     );
     await builder.processPreKeyBundle(preKeyBundle);
   }
@@ -79,21 +78,21 @@ class SignalService {
     final cipher = SessionCipher(
         _store!, _store!, _store!, _store!, _addr(remoteId));
     final ct = await cipher.encrypt(utf8.encode(plaintext));
-    return (type: ct.type, body: ct.serialize());
+    return (type: ct.getType(), body: ct.serialize());
   }
 
   Future<String> decrypt(String remoteId, int type, Uint8List body) async {
     await ensureIdentity();
     final cipher = SessionCipher(
         _store!, _store!, _store!, _store!, _addr(remoteId));
-    CiphertextMessage msg;
+    final Uint8List plain;
     if (type == 4) {
-      msg = PreKeySignalMessage.fromSerialized(body);
-      final plain = await cipher.decrypt(msg as PreKeySignalMessage);
-      return utf8.decode(plain);
+      final msg = PreKeySignalMessage.fromSerialized(body);
+      plain = await cipher.decrypt(msg);
+    } else {
+      final msg = SignalMessage.fromSerialized(body);
+      plain = await cipher.decrypt(msg);
     }
-    msg = SignalMessage.fromSerialized(body);
-    final plain = await cipher.decrypt(msg as SignalMessage);
     return utf8.decode(plain);
   }
 }

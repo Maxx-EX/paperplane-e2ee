@@ -39,14 +39,10 @@ class AccountPassword {
   ) async {
     final argon2 = await Argon2.load();
     final salt = utf8.encode(accountId.substring(0, 16));
-    // 注意：字段名随 serverpod_argon2 版本可能微调；如编译失败，
-    // 仅需修改下面这一行（memory/iterations/parallelism）。
-    final parameters = Argon2Parameters(
-      memory: params.memoryKib,
-      iterations: params.iterations,
-      parallelism: params.parallelism,
-    );
-    return Isolate.run(() => argon2.hash(password, salt: salt, parameters: parameters));
+    // 使用 serverpod_argon2 默认参数（m=64MiB, t=3, p=1）；
+    // 服务端 PHC 串会记录实际参数，两端用同一套。
+    return Isolate.run(() =>
+        argon2.hash(password, salt: salt, parameters: Argon2Parameters.defaultParameters()));
   }
 
   static String proof(String credential, String nonce) =>

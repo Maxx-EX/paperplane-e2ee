@@ -39,6 +39,7 @@ class ChatPage extends StatelessWidget {
                 MessageBubble(msg: item as ChatMsg),
             bottomWidget: Composer(onSend: store.sendText),
             isLastPage: true,
+            bubbleRtlAlignment: BubbleRtlAlignment.right,
             typingIndicatorOptions: const TypingIndicatorOptions(),
           );
         },
