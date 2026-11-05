@@ -32,10 +32,19 @@ class ChatPage extends StatelessWidget {
         builder: (_, store, __) {
           if (store.contactId == null) {
             return Center(
-              child: OutlinedButton.icon(
-                onPressed: () => _openTargetDialog(context, store),
-                icon: const Icon(Icons.person_add),
-                label: const Text('输入对方账号 ID 开始聊天'),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.chat_bubble_outline, size: 64, color: Colors.grey),
+                  const SizedBox(height: 16),
+                  const Text('还没有进行中的会话'),
+                  const SizedBox(height: 24),
+                  OutlinedButton.icon(
+                    onPressed: () => _openTargetDialog(context, store),
+                    icon: const Icon(Icons.person_add),
+                    label: const Text('输入对方账号 ID 开始聊天'),
+                  ),
+                ],
               ),
             );
           }

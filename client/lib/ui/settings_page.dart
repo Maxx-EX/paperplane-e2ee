@@ -1,78 +1,57 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../config/app_config.dart';
 import '../state/chat_store.dart';
 
-class SettingsPage extends StatefulWidget {
+class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
 
   @override
-  State<SettingsPage> createState() => _SettingsPageState();
-}
-
-class _SettingsPageState extends State<SettingsPage> {
-  final _ctrl = TextEditingController();
-  bool _saved = false;
-
-  @override
-  void initState() {
-    super.initState();
-    final store = Provider.of<ChatStore>(context, listen: false);
-    _ctrl.text = store.api.base;
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final store = context.watch<ChatStore>();
     return Scaffold(
       appBar: AppBar(title: const Text('设置')),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const Text('服务器地址', style: TextStyle(fontWeight: FontWeight.w600)),
-            const SizedBox(height: 8),
-            TextField(
-              controller: _ctrl,
-              decoration: const InputDecoration(
-                hintText: 'http://127.0.0.1:8080',
-                helperText: '默认 127.0.0.1:8080；换地址后需重启 App 生效',
-              ),
+      body: ListView(
+        children: [
+          const ListTile(
+            title: Text('服务器地址'),
+            subtitle: Text(AppConfig.baseUrl),
+            leading: Icon(Icons.dns),
+          ),
+          ListTile(
+            title: Text('账号 ID'),
+            subtitle: Text(store.accountId ?? '未登录'),
+            leading: Icon(Icons.fingerprint),
+          ),
+          const Divider(),
+          ListTile(
+            title: const Text('关于'),
+            subtitle: const Text('Paperplane v0.2.0 · AGPL-3.0'),
+            leading: const Icon(Icons.info_outline),
+            onTap: () => showAboutDialog(
+              context: context,
+              applicationName: 'Paperplane',
+              applicationVersion: '0.2.0',
+              applicationLegalese: '零知识 E2EE 加密聊天',
             ),
-            const SizedBox(height: 20),
-            FilledButton(
+          ),
+          const SizedBox(height: 24),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: FilledButton.icon(
               onPressed: () async {
-                final store = Provider.of<ChatStore>(context, listen: false);
-                await store.setServerUrl(_ctrl.text.trim());
-                setState(() => _saved = true);
+                await context.read<ChatStore>().logout();
+                if (context.mounted) Navigator.pop(context);
               },
-              child: const Text('保存'),
-            ),
-            if (_saved)
-              const Padding(
-                padding: EdgeInsets.only(top: 12),
-                child: Text('已保存，重启 App 生效',
-                    style: TextStyle(color: Colors.green)),
+              icon: const Icon(Icons.logout),
+              label: const Text('退出登录'),
+              style: FilledButton.styleFrom(
+                minimumSize: const Size.fromHeight(48),
               ),
-            const SizedBox(height: 30),
-            const Divider(),
-            const SizedBox(height: 10),
-            ListTile(
-              leading: const Icon(Icons.badge),
-              title: const Text('我的账号 ID'),
-              subtitle: Text(
-                Provider.of<ChatStore>(context).accountId ?? '未登录',
-                style: const TextStyle(fontFamily: 'monospace', fontSize: 12),
-              ),
-              onTap: () {
-                final id = Provider.of<ChatStore>(context, listen: false).accountId ?? '';
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('已复制: $id')),
-                );
-              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -1,0 +1,66 @@
+# Termux 专用配置：跳过 XDP/CrowdSec，只跑应用层
+# 由 scripts/termux-bootstrap.sh 使用
+project: paperplane
+environment: development
+
+server:
+  host: 127.0.0.1
+  port: 8080
+  public_url: http://127.0.0.1:8080
+  ws_allowed_origins:
+    - http://127.0.0.1:8080
+    - http://localhost:8080
+  read_header_timeout: 10s
+  idle_timeout: 120s
+  shutdown_timeout: 15s
+
+database:
+  host: 127.0.0.1
+  port: 5432
+  name: paperplane
+  user: paperplane
+  password: paperplane
+  max_conns: 4
+  envelope_ttl_hours: 24
+
+redis:
+  host: 127.0.0.1
+  port: 6379
+  password: ""
+  db: 0
+  pool_size: 4
+
+jwt:
+  secret: termux-dev-secret-at-least-32-bytes-long-xxxx
+  ttl: 24h
+  issuer: paperplane
+
+crypto:
+  pepper: termux-dev-pepper-at-least-16b
+  argon2:
+    memory_kib: 65536
+    iterations: 3
+    parallelism: 1
+
+client:
+  dev_server_url: http://127.0.0.1:8080
+  app_name: Paperplane
+
+defense:
+  xdp:
+    enabled: false        # Termux 非 root，跳过
+    iface: wlan0
+  rate_limits:
+    ws_per_ip: 32
+    prekey_per_min: 120
+    envelope_per_min: 240
+    envelope_distinct_targets: 64
+    envelope_window: 60s
+    challenge_per_min: 30
+  kotlin:
+    redis_stream: paperplane:events
+    consumer_group: paperplane-policy
+    window: 60s
+  crowdsec:
+    collections: []
+    lapi_port: 8081
