@@ -44,8 +44,6 @@ class ChatStore extends ChangeNotifier {
   bool get loggedIn => accountId != null;
 
   Future<void> bootstrap() async {
-    await AppConfig.load();
-    api.base = AppConfig.baseUrl;
     accountId = await storage.read(key: 'account_id');
     api.token = await storage.read(key: 'token');
     if (accountId != null && api.token != null) {

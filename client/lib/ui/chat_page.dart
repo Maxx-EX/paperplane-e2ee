@@ -3,7 +3,6 @@ import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:provider/provider.dart';
 
 import '../state/chat_store.dart';
-import 'settings_page.dart';
 import 'widgets/composer.dart';
 import 'widgets/message_bubble.dart';
 
@@ -16,12 +15,6 @@ class ChatPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Paperplane'),
         actions: [
-          IconButton(
-            onPressed: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => const SettingsPage()),
-            ),
-            icon: const Icon(Icons.settings),
-          ),
           IconButton(
             onPressed: () => context.read<ChatStore>().logout(),
             icon: const Icon(Icons.logout),
