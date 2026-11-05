@@ -41,6 +41,7 @@ class ChatPage extends StatelessWidget {
             isLastPage: true,
             scrollController: ScrollController(),
             bubbleRtlAlignment: BubbleRtlAlignment.right,
+            useTopSafeAreaInset: true,
             typingIndicatorOptions: const TypingIndicatorOptions(),
           );
         },
