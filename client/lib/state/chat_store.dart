@@ -158,4 +158,9 @@ class ChatStore extends ChangeNotifier {
     messages.clear();
     notifyListeners();
   }
+
+  Future<void> setServerUrl(String url) async {
+    await storage.write(key: 'server_url', value: url);
+    // 重启 App 后由 ApiClient 读取；这里只持久化。
+  }
 }
