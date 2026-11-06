@@ -13,6 +13,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"strings"
 	"sync"
 	"syscall"
 	"time"
@@ -88,39 +89,40 @@ func main() {
 
 func handleRegister(w http.ResponseWriter, r *http.Request) {
 	var body struct {
-		AccountID  string `json:"account_id"`
-		Argon2Hash string `json:"argon2_hash"`
+		Username string `json:"username"`
+		Hash     string `json:"argon2id_hash"`
 	}
 	json.NewDecoder(r.Body).Decode(&body)
 	mu.Lock()
-	accounts[body.AccountID] = &account{Argon2Hash: body.Argon2Hash, Bundle: map[string]any{}}
+	accounts[body.Username] = &account{Argon2Hash: body.Hash, Bundle: map[string]any{}}
 	mu.Unlock()
-	json.NewEncoder(w).Encode(map[string]any{"ok": true, "token": "dev-" + body.AccountID})
+	json.NewEncoder(w).Encode(map[string]any{"ok": true, "token": "dev-" + body.Username})
 }
 
 func handleLogin(w http.ResponseWriter, r *http.Request) {
 	var body struct {
-		AccountID string `json:"account_id"`
-		Proof     string `json:"proof"`
+		Username string `json:"username"`
+		Proof    string `json:"proof"`
 	}
 	json.NewDecoder(r.Body).Decode(&body)
 	mu.RLock()
-	_, ok := accounts[body.AccountID]
+	_, ok := accounts[body.Username]
 	mu.RUnlock()
 	if !ok {
 		http.Error(w, "no such user", 404)
 		return
 	}
-	json.NewEncoder(w).Encode(map[string]any{"ok": true, "token": "dev-" + body.AccountID})
+	json.NewEncoder(w).Encode(map[string]any{"ok": true, "token": "dev-" + body.Username})
 }
 
 func handleKeysUpload(w http.ResponseWriter, r *http.Request) {
 	token := r.Header.Get("Authorization")
-	if len(token) < 5 || token[:4] != "dev-" {
+	token = strings.TrimPrefix(token, "Bearer ")
+	if !strings.HasPrefix(token, "dev-") {
 		http.Error(w, "unauthorized", 401)
 		return
 	}
-	aid := token[4:]
+	aid := strings.TrimPrefix(token, "dev-")
 	var bundle map[string]any
 	json.NewDecoder(r.Body).Decode(&bundle)
 	mu.Lock()
@@ -162,11 +164,11 @@ func handleEnvelope(w http.ResponseWriter, r *http.Request) {
 
 func handleWS(w http.ResponseWriter, r *http.Request) {
 	token := r.URL.Query().Get("token")
-	if len(token) < 5 || token[:4] != "dev-" {
+	if !strings.HasPrefix(token, "dev-") {
 		http.Error(w, "unauthorized", 401)
 		return
 	}
-	aid := token[4:]
+	aid := strings.TrimPrefix(token, "dev-")
 	c, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		return
