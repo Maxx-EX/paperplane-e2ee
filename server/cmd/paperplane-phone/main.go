@@ -74,12 +74,25 @@ func main() {
 	mux.HandleFunc("/api/v1/envelopes/ack", handleAck)
 	mux.HandleFunc("/api/v1/ws-ticket", handleWsTicket)
 	mux.HandleFunc("/ws", handleWS)
+	// 根路径：返回版本号，方便用户在手机浏览器里访问 http://127.0.0.1:8080 验证
+	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path == "/" {
+			json.NewEncoder(w).Encode(map[string]any{
+				"app": "paperplane-phone", "version": "v0.3.7", "status": "ok",
+			})
+			return
+		}
+		// 所有未匹配的路由返回 JSON，不要返回 Go 默认的文本 404（会让客户端 JSON 解析崩）
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusNotFound)
+		json.NewEncoder(w).Encode(map[string]any{"error": "not found", "path": r.URL.Path})
+	})
 
 	srv := &http.Server{Addr: *addr, Handler: mux}
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
 	go func() {
-		slog.Info("paperplane-phone listening", "addr", *addr)
+		slog.Info("paperplane-phone v0.3.7 listening", "addr", *addr)
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			slog.Error("server", "err", err)
 		}
