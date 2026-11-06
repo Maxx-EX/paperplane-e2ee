@@ -53,22 +53,22 @@ func main() {
 	mux.HandleFunc("/health", func(w http.ResponseWriter, _ *http.Request) {
 		w.Write([]byte("ok"))
 	})
-	mux.HandleFunc("/v1/params", func(w http.ResponseWriter, _ *http.Request) {
+	mux.HandleFunc("/api/v1/params", func(w http.ResponseWriter, _ *http.Request) {
 		json.NewEncoder(w).Encode(map[string]any{
 			"pepper": "dev-pepper-change-me",
 			"argon2": map[string]int{"m": 65536, "t": 3, "p": 1},
 		})
 	})
-	mux.HandleFunc("/v1/challenge", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/api/v1/auth/challenge", func(w http.ResponseWriter, r *http.Request) {
 		var body struct{ Username, Action string }
 		json.NewDecoder(r.Body).Decode(&body)
 		json.NewEncoder(w).Encode(map[string]any{"nonce": fmt.Sprintf("nonce-%d", time.Now().UnixNano())})
 	})
-	mux.HandleFunc("/v1/register", handleRegister)
-	mux.HandleFunc("/v1/login", handleLogin)
-	mux.HandleFunc("/v1/keys/upload", handleKeysUpload)
-	mux.HandleFunc("/v1/keys/:id", handleKeysGet)
-	mux.HandleFunc("/v1/envelopes", handleEnvelope)
+	mux.HandleFunc("/api/v1/auth/register", handleRegister)
+	mux.HandleFunc("/api/v1/auth/login", handleLogin)
+	mux.HandleFunc("/api/v1/keys/upload", handleKeysUpload)
+	mux.HandleFunc("/api/v1/keys/{id}", handleKeysGet)
+	mux.HandleFunc("/api/v1/envelopes", handleEnvelope)
 	mux.HandleFunc("/ws", handleWS)
 
 	srv := &http.Server{Addr: *addr, Handler: mux}
