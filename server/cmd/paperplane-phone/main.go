@@ -1,7 +1,6 @@
 // paperplane-phone: 手机/Termux 专用极简 relay。
 // 零外部依赖：不要 PostgreSQL、不要 Redis、不要 Docker、不要 proot。
 // 纯内存存储，重启即清空，只给局域网内 1-2 个人测试用。
-// 生产部署请用 server/cmd/server（PostgreSQL + Redis + Caddy + CrowdSec）。
 package main
 
 import (
@@ -22,28 +21,30 @@ import (
 )
 
 var upgrader = websocket.Upgrader{
-	CheckOrigin: func(r *http.Request) bool { return true }, // 局域网测试
+	CheckOrigin: func(r *http.Request) bool { return true },
 }
 
 type account struct {
-	Argon2Hash string            `json:"argon2_hash"`
-	Bundle     map[string]any    `json:"bundle"`
-	WS         *websocket.Conn   `json:"-"`
-	mu         sync.Mutex        `json:"-"`
+	Hash   string            `json:"hash"`
+	Bundle map[string]any    `json:"bundle"`
+	WS     *websocket.Conn   `json:"-"`
+	mu     sync.Mutex        `json:"-"`
 }
 
 type envelope struct {
-	From    string `json:"from"`
-	To      string `json:"to"`
-	Type    int    `json:"type"`
-	Body    string `json:"body"`
-	SentAt  int64  `json:"sent_at"`
+	ID         int64  `json:"id"`
+	From       string `json:"from"`
+	To         string `json:"to"`
+	CipherType int    `json:"cipher_type"`
+	Body       string `json:"body"`
+	SentAt     int64  `json:"sent_at"`
 }
 
 var (
 	mu       sync.RWMutex
 	accounts = map[string]*account{}
 	outbox  = map[string][]envelope{}
+	nextID  int64 = 1
 )
 
 func main() {
@@ -67,9 +68,11 @@ func main() {
 	})
 	mux.HandleFunc("/api/v1/auth/register", handleRegister)
 	mux.HandleFunc("/api/v1/auth/login", handleLogin)
-	mux.HandleFunc("/api/v1/keys/upload", handleKeysUpload)
+	mux.HandleFunc("/api/v1/keys", handleKeysUpload)
 	mux.HandleFunc("/api/v1/keys/{id}", handleKeysGet)
-	mux.HandleFunc("/api/v1/envelopes", handleEnvelope)
+	mux.HandleFunc("/api/v1/envelopes", handleEnvelopes)
+	mux.HandleFunc("/api/v1/envelopes/ack", handleAck)
+	mux.HandleFunc("/api/v1/ws-ticket", handleWsTicket)
 	mux.HandleFunc("/ws", handleWS)
 
 	srv := &http.Server{Addr: *addr, Handler: mux}
@@ -87,6 +90,15 @@ func main() {
 	srv.Shutdown(shutdownCtx)
 }
 
+func authUser(r *http.Request) string {
+	token := r.Header.Get("Authorization")
+	token = strings.TrimPrefix(token, "Bearer ")
+	if !strings.HasPrefix(token, "dev-") {
+		return ""
+	}
+	return strings.TrimPrefix(token, "dev-")
+}
+
 func handleRegister(w http.ResponseWriter, r *http.Request) {
 	var body struct {
 		Username string `json:"username"`
@@ -94,15 +106,16 @@ func handleRegister(w http.ResponseWriter, r *http.Request) {
 	}
 	json.NewDecoder(r.Body).Decode(&body)
 	mu.Lock()
-	accounts[body.Username] = &account{Argon2Hash: body.Hash, Bundle: map[string]any{}}
+	accounts[body.Username] = &account{Hash: body.Hash, Bundle: map[string]any{}}
 	mu.Unlock()
-	json.NewEncoder(w).Encode(map[string]any{"ok": true, "token": "dev-" + body.Username})
+	json.NewEncoder(w).Encode(map[string]any{
+		"ok": true, "token": "dev-" + body.Username, "account_id": body.Username,
+	})
 }
 
 func handleLogin(w http.ResponseWriter, r *http.Request) {
 	var body struct {
 		Username string `json:"username"`
-		Proof    string `json:"proof"`
 	}
 	json.NewDecoder(r.Body).Decode(&body)
 	mu.RLock()
@@ -112,17 +125,17 @@ func handleLogin(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "no such user", 404)
 		return
 	}
-	json.NewEncoder(w).Encode(map[string]any{"ok": true, "token": "dev-" + body.Username})
+	json.NewEncoder(w).Encode(map[string]any{
+		"ok": true, "token": "dev-" + body.Username, "account_id": body.Username,
+	})
 }
 
 func handleKeysUpload(w http.ResponseWriter, r *http.Request) {
-	token := r.Header.Get("Authorization")
-	token = strings.TrimPrefix(token, "Bearer ")
-	if !strings.HasPrefix(token, "dev-") {
+	aid := authUser(r)
+	if aid == "" {
 		http.Error(w, "unauthorized", 401)
 		return
 	}
-	aid := strings.TrimPrefix(token, "dev-")
 	var bundle map[string]any
 	json.NewDecoder(r.Body).Decode(&bundle)
 	mu.Lock()
@@ -145,21 +158,81 @@ func handleKeysGet(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(acct.Bundle)
 }
 
-func handleEnvelope(w http.ResponseWriter, r *http.Request) {
-	var env envelope
-	json.NewDecoder(r.Body).Decode(&env)
-	env.SentAt = time.Now().UnixMilli()
-	mu.Lock()
-	outbox[env.To] = append(outbox[env.To], env)
-	// 如果对方在线，直接 WS 推送
-	if acct, ok := accounts[env.To]; ok && acct.WS != nil {
-		acct.mu.Lock()
-		c := acct.WS
-		acct.mu.Unlock()
-		_ = c.WriteJSON(env)
+func handleEnvelopes(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodPost {
+		var body struct {
+			To         string `json:"to"`
+			CipherType int    `json:"cipher_type"`
+			Body       string `json:"body"`
+		}
+		json.NewDecoder(r.Body).Decode(&body)
+		from := authUser(r)
+		mu.Lock()
+		env := envelope{
+			ID: nextID, From: from, To: body.To,
+			CipherType: body.CipherType, Body: body.Body,
+			SentAt: time.Now().UnixMilli(),
+		}
+		nextID++
+		outbox[body.To] = append(outbox[body.To], env)
+		if acct, ok := accounts[body.To]; ok && acct.WS != nil {
+			acct.mu.Lock()
+			c := acct.WS
+			acct.mu.Unlock()
+			_ = c.WriteJSON(env)
+		}
+		mu.Unlock()
+		json.NewEncoder(w).Encode(map[string]any{"ok": true, "id": env.ID})
+		return
 	}
+	// GET: pull pending envelopes
+	aid := authUser(r)
+	if aid == "" {
+		http.Error(w, "unauthorized", 401)
+		return
+	}
+	mu.RLock()
+	pending := outbox[aid]
+	mu.RUnlock()
+	json.NewEncoder(w).Encode(map[string]any{"envelopes": pending})
+}
+
+func handleAck(w http.ResponseWriter, r *http.Request) {
+	var body struct {
+		IDs []int64 `json:"ids"`
+	}
+	json.NewDecoder(r.Body).Decode(&body)
+	aid := authUser(r)
+	if aid == "" {
+		http.Error(w, "unauthorized", 401)
+		return
+	}
+	mu.Lock()
+	keep := []envelope{}
+	for _, e := range outbox[aid] {
+		acked := false
+		for _, id := range body.IDs {
+			if e.ID == id {
+				acked = true
+				break
+			}
+		}
+		if !acked {
+			keep = append(keep, e)
+		}
+	}
+	outbox[aid] = keep
 	mu.Unlock()
 	json.NewEncoder(w).Encode(map[string]any{"ok": true})
+}
+
+func handleWsTicket(w http.ResponseWriter, r *http.Request) {
+	aid := authUser(r)
+	if aid == "" {
+		http.Error(w, "unauthorized", 401)
+		return
+	}
+	json.NewEncoder(w).Encode(map[string]any{"ticket": "dev-" + aid})
 }
 
 func handleWS(w http.ResponseWriter, r *http.Request) {
@@ -178,9 +251,8 @@ func handleWS(w http.ResponseWriter, r *http.Request) {
 		acct.mu.Lock()
 		acct.WS = c
 		acct.mu.Unlock()
-		// 推送离线信封
-		for _, env := range outbox[aid] {
-			_ = c.WriteJSON(env)
+		for _, e := range outbox[aid] {
+			_ = c.WriteJSON(e)
 		}
 		outbox[aid] = nil
 	}
