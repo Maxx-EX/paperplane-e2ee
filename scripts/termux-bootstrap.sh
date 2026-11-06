@@ -15,6 +15,6 @@ echo "==> [2/3] 唤醒锁（防止手机杀后台）"
 termux-wake-lock 2>/dev/null || true
 
 echo "==> [3/3] 启动 paperplane-phone（监听 :8080）"
-cd "$ROOT"
+cd "$ROOT/server"
 export CGO_ENABLED=0
-exec go run ./server/cmd/paperplane-phone -addr :8080
+exec go run ./cmd/paperplane-phone -addr :8080

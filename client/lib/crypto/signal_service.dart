@@ -1,46 +1,78 @@
-// Signal 协议层（v0.2 编译占位）：
-// 完整 X3DH + Double Ratchet 由 libsignal_protocol_dart 提供，
-// 此处先用可编译的最小实现跑通 APK 打包；
-// 真正的 libsignal 接线在 v0.3 替换本文件即可（接口已对齐）。
+// E2EE 层：X25519 密钥协商 + AES-256-GCM 加密。
+// 基于 package:cryptography（Dart 官方加密库，非自研算法）。
+// 注意：这是简化版 E2EE（无 Double Ratchet），适合 1:1 聊天；
+// 完整 X3DH + Double Ratchet 在后续版本接 libsignal。
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:cryptography/cryptography.dart';
+
 class SignalService {
-  final Map<String, dynamic> _bundle = {};
-  final Set<String> _established = {};
+  X25519KeyPair? _identity;
+  final Map<String, SimplePublicKey> _remoteKeys = {};
 
   static const int deviceId = 1;
 
   Future<void> ensureIdentity() async {
-    if (_bundle.isNotEmpty) return;
-    _bundle['identity_key'] = base64Encode(List.generate(33, (i) => i + 1));
-    _bundle['signed_prekey'] = {
-      'id': 1,
-      'public': base64Encode(List.generate(32, (i) => i + 2)),
-      'signature': base64Encode(List.generate(64, (i) => i + 3)),
-    };
-    _bundle['one_time_prekeys'] = [
-      for (var i = 0; i < 10; i++)
-        {'id': i, 'public': base64Encode(List.generate(32, (j) => i + j + 4))},
-    ];
+    if (_identity != null) return;
+    _identity = await X25519().newKeyPair();
   }
 
   Future<Map<String, dynamic>> buildBundle() async {
     await ensureIdentity();
-    return Map<String, dynamic>.from(_bundle);
+    final pk = await _identity!.extractPublicKey();
+    return {
+      'identity_key': base64Encode(pk.bytes),
+      'device_id': deviceId,
+    };
   }
 
   Future<void> establishSession(
       String remoteId, Map<String, dynamic> bundle) async {
-    _established.add(remoteId);
+    final pkB64 = bundle['identity_key'] as String;
+    _remoteKeys[remoteId] =
+        SimplePublicKey(base64Decode(pkB64), type: KeyPairType.x25519);
   }
 
   Future<({int type, Uint8List body})> encrypt(
       String remoteId, String plaintext) async {
-    return (type: 3, body: utf8.encode(base64Encode(utf8.encode(plaintext))));
+    await ensureIdentity();
+    final remotePk = _remoteKeys[remoteId];
+    if (remotePk == null) throw StateError('no session with $remoteId');
+    final shared = await X25519().sharedSecret(
+      keyPair: _identity!,
+      remotePublicKey: remotePk,
+    );
+    final gcm = AesGcm.with256bits();
+    final box = await gcm.encrypt(
+      utf8.encode(plaintext),
+      secretKey: SecretKey(shared.bytes),
+      nonce: List.generate(12, (i) => i * 7 + 1),
+    );
+    final body = Uint8List.fromList([
+      ...box.nonce,
+      ...box.mac.bytes,
+      ...box.cipherText,
+    ]);
+    return (type: 3, body: body);
   }
 
   Future<String> decrypt(String remoteId, int type, Uint8List body) async {
-    return utf8.decode(base64Decode(utf8.decode(body)));
+    await ensureIdentity();
+    final remotePk = _remoteKeys[remoteId];
+    if (remotePk == null) throw StateError('no session with $remoteId');
+    final nonce = body.sublist(0, 12);
+    final mac = body.sublist(12, 28);
+    final cipherText = body.sublist(28);
+    final shared = await X25519().sharedSecret(
+      keyPair: _identity!,
+      remotePublicKey: remotePk,
+    );
+    final gcm = AesGcm.with256bits();
+    final plain = await gcm.decrypt(
+      SecretBox(cipherText, nonce: nonce, mac: Mac(mac)),
+      secretKey: SecretKey(shared.bytes),
+    );
+    return utf8.decode(plain);
   }
 }
